@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -15,9 +16,11 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseTimeEntity {
     @CreatedDate
-    protected LocalDateTime createdTime;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdTime;
 
     @LastModifiedDate
-    protected LocalDateTime modifiedTime;
+    @Column(name = "updated_at")
+    private LocalDateTime modifiedTime;
 
 }
