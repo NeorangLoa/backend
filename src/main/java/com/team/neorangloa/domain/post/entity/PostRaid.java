@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class PostRaid extends BaseTimeEntity {
     @Id
     @Column(name = "POST_RAID_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)

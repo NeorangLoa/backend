@@ -3,10 +3,7 @@ package com.team.neorangloa.domain.raid.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Table(name = "RAID")
@@ -15,6 +12,7 @@ import javax.persistence.Table;
 public class Raid {
     @Id
     @Column(name = "RAID_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)

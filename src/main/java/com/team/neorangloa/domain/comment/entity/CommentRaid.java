@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class CommentRaid extends BaseTimeEntity {
     @Id
     @Column(name = "COMMENT_RAID_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
