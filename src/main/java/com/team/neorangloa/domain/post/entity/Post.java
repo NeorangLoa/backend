@@ -1,5 +1,6 @@
 package com.team.neorangloa.domain.post.entity;
 
+import com.team.neorangloa.domain.post.dto.PostRequest;
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.entity.BaseTimeEntity;
 import lombok.Builder;
@@ -41,6 +42,12 @@ public class Post extends BaseTimeEntity {
         this.author = author;
         this.post_image = post_image;
         this.removed = removed;
+    }
+
+    public void updatePost(PostRequest postRequest) {
+        this.title = postRequest.getTitle();
+        this.content= postRequest.getContent();
+        this.post_image = postRequest.getImage();
     }
 
 }

@@ -24,4 +24,10 @@ public class PostServiceImpl implements PostService {
         return postRepository.findPostById(postId).orElseThrow(
                 () -> new BusinessException(ErrorCode.POST_NOT_FOUND_ERROR));
     }
+
+    @Transactional
+    @Override
+    public void updatePost(Post post, PostRequest postRequest) {
+        post.updatePost(postRequest);
+    }
 }

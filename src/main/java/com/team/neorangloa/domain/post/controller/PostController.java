@@ -5,6 +5,7 @@ package com.team.neorangloa.domain.post.controller;
 //import io.swagger.annotations.ApiResponse;
 //import io.swagger.annotations.ApiResponses;
 import com.team.neorangloa.domain.post.dto.PostRequest;
+import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.service.PostService;
 import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
@@ -32,5 +33,14 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseEntity<ResultResponse> getPost(@PathVariable Long postId) {
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_GET_SUCCESS, postService.findPostById(postId)));
+    }
+
+    @PutMapping("/{postId}")
+    public ResponseEntity<ResultResponse> updatePost(@PathVariable Long postId,
+                                                     @RequestBody @Valid PostRequest postRequest) {
+        Post post = postService.findPostById(postId);
+        postService.updatePost(post, postRequest);
+
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_UPDATE_SUCCESS));
     }
 }
