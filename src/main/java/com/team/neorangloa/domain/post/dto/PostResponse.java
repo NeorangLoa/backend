@@ -1,6 +1,5 @@
 package com.team.neorangloa.domain.post.dto;
 
-import com.team.neorangloa.domain.post.entity.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
