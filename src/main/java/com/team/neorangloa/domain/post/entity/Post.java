@@ -50,4 +50,8 @@ public class Post extends BaseTimeEntity {
         this.post_image = postRequest.getImage();
     }
 
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
+    }
+
 }

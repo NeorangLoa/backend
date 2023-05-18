@@ -21,6 +21,8 @@ public enum ResultCode {
     USER_POST_PAGING_GET_SUCCESS("S004", "유저별 게시물 페이징 조회 성공"),
     POST_UPDATE_SUCCESS("S005", "게시물 수정 성공"),
 
+    POST_DELETE_SUCCESS("S006", "게시물 삭제 성공"),
+
     // comment
     REGISTER_COMMENT_SUCCESS("C001", "댓글 등록 성공"),
     COMMENT_FIND_SUCCESS("C002", "댓글 찾기 성공"),

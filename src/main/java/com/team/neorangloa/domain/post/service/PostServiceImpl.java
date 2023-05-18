@@ -30,4 +30,11 @@ public class PostServiceImpl implements PostService {
     public void updatePost(Post post, PostRequest postRequest) {
         post.updatePost(postRequest);
     }
+
+    @Transactional
+    @Override
+    public void deletePost(Post post) {
+        post.setRemoved(true);
+        postRepository.save(post);
+    }
 }
