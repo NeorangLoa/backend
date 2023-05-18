@@ -11,10 +11,7 @@ import com.team.neorangloa.global.result.ResultResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -30,5 +27,10 @@ public class PostController {
     public ResponseEntity<ResultResponse> createNewPost(@RequestBody @Valid PostRequest postRequest) {
         postService.createNewPost(postRequest);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_CREATE_SUCCESS));
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<ResultResponse> getPost(@PathVariable Long postId) {
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_GET_SUCCESS, postService.findPostById(postId)));
     }
 }

@@ -3,6 +3,8 @@ package com.team.neorangloa.domain.post.service;
 import com.team.neorangloa.domain.post.dto.PostRequest;
 import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.repository.PostRepository;
+import com.team.neorangloa.global.error.ErrorCode;
+import com.team.neorangloa.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,5 +18,10 @@ public class PostServiceImpl implements PostService {
     public void createNewPost(PostRequest postRequest) {
         Post post = postRequest.toEntity();
         postRepository.save(post);
+    }
+    @Override
+    public Post findPostById(Long postId) {
+        return postRepository.findPostById(postId).orElseThrow(
+                () -> new BusinessException(ErrorCode.POST_NOT_FOUND_ERROR));
     }
 }
