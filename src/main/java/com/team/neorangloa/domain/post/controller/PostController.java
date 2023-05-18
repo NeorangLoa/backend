@@ -4,6 +4,8 @@ package com.team.neorangloa.domain.post.controller;
 //import io.swagger.annotations.ApiOperation;
 //import io.swagger.annotations.ApiResponse;
 //import io.swagger.annotations.ApiResponses;
+import com.team.neorangloa.domain.post.PostMapper;
+import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRequest;
 import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.service.PostService;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -24,6 +27,8 @@ import javax.validation.Valid;
 public class PostController {
     private final PostService postService;
 
+    private final PostMapper postMapper;
+
     @PostMapping
     public ResponseEntity<ResultResponse> createNewPost(@RequestBody @Valid PostRequest postRequest) {
         postService.createNewPost(postRequest);
@@ -32,7 +37,15 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<ResultResponse> getPost(@PathVariable Long postId) {
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_GET_SUCCESS, postService.findPostById(postId)));
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_GET_SUCCESS
+                ,postMapper.of(postService.findPostById(postId))));
+    }
+
+    @GetMapping("/all/{page}")
+    public ResponseEntity<ResultResponse> getPosts(@PathVariable Integer page
+            ,@RequestParam(defaultValue = "10") Integer size) {
+        List<PostListResponse> posts = postService.getPosts(page,size);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_PAGING_GET_SUCCESS, posts));
     }
 
     @PutMapping("/{postId}")
