@@ -19,12 +19,4 @@ public class PostRequest {
     private final String content;
     private final String image;
 
-    public Post toEntity() {
-        return Post.builder()
-                .title(this.title)
-                .content(this.content)
-                .post_image(this.image)
-                .removed(false)
-                .build();
-    }
 }
