@@ -1,5 +1,7 @@
 package com.team.neorangloa.domain.raid.entity;
 
+import com.team.neorangloa.domain.post.dto.PostRaidRequest;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +25,17 @@ public class Raid {
 
     @Column(name = "ITEM_LEVEL")
     private String itemLevel;
+
+    @Builder
+    public Raid(String name, String level, String itemLevel) {
+        this.name = name;
+        this.level = level;
+        this.itemLevel = itemLevel;
+    }
+
+    public void updateRaid(PostRaidRequest postRaidRequest) {
+        this.name = postRaidRequest.getRaidName();
+        this.level = postRaidRequest.getRaidLevel();
+        this.itemLevel = postRaidRequest.getRaidItemLevel();
+    }
 }
