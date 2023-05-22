@@ -5,6 +5,7 @@ import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.domain.user.mapper.UserMapper;
 import com.team.neorangloa.domain.user.repository.UserRepository;
 import com.team.neorangloa.domain.user.exception.DuplicatedEmailException;
+import com.team.neorangloa.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,9 @@ public class UserService {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new DuplicatedEmailException();
         }
+    }
+
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 }

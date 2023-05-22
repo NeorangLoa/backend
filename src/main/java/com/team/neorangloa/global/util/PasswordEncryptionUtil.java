@@ -10,4 +10,8 @@ public class PasswordEncryptionUtil {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
     }
+    public static boolean isSamePassword(String rowPassword, String encryptPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(rowPassword, encryptPassword);
+    }
 }
