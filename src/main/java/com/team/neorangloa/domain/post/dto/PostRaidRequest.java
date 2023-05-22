@@ -34,8 +34,6 @@ public class PostRaidRequest {
     @NotEmpty
     private final String raidName;
     @NotEmpty
-    private final String raidLevel;
-    @NotEmpty
     private final String raidItemLevel;
 
 }

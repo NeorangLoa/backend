@@ -18,6 +18,5 @@ public class PostRaidResponse {
     private final int maxSupporter;
     private final LocalDateTime finishedAt;
     private final String raidName;
-    private final String raidLevel;
     private final String raidItemLevel;
 }

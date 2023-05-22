@@ -23,7 +23,6 @@ public class PostRaidMapper {
                 .finishedAt(postRaidRequest.getFinishedAt())
                 .raid(Raid.builder()
                         .name(postRaidRequest.getRaidName())
-                        .level(postRaidRequest.getRaidLevel())
                         .itemLevel(postRaidRequest.getRaidItemLevel())
                         .build())
                 .removed(false)
@@ -40,7 +39,6 @@ public class PostRaidMapper {
                 .maxSupporter(postRaid.getMaxSupporter())
                 .finishedAt(postRaid.getFinishedAt())
                 .raidName(postRaid.getRaid().getName())
-                .raidLevel(postRaid.getRaid().getLevel())
                 .raidItemLevel(postRaid.getRaid().getItemLevel())
                 .build();
     }
@@ -52,7 +50,6 @@ public class PostRaidMapper {
                 .maxAttacker(postRaid.getMaxAttacker())
                 .maxSupporter(postRaid.getMaxSupporter())
                 .raidName(postRaid.getRaid().getName())
-                .raidLevel(postRaid.getRaid().getLevel())
                 .raidItemLevel(postRaid.getRaid().getItemLevel())
                 .build();
     }

@@ -15,6 +15,5 @@ public class PostRaidListResponse {
     private final int maxAttacker;
     private final int maxSupporter;
     private final String raidName;
-    private final String raidLevel;
     private final String raidItemLevel;
 }
