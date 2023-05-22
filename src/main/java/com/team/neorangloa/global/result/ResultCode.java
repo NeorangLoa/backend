@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ResultCode {
     // user
-    USER_REGISTRATION_SUCCESS("U001", "사용자 등록 성공"),
+    USER_SIGNUP_SUCCESS("U001", "사용자 등록 성공"),
     USER_USERNAME_DUPLICATED("U002", "회원 아이디 중복"),
     USER_USERNAME_NOT_DUPLICATED("U003", "회원 아이디 중복되지 않음"),
     USER_LOGIN_SUCCESS("U004", "회원 로그인 성공"),
