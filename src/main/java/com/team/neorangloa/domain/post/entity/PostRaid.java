@@ -73,4 +73,6 @@ public class PostRaid extends BaseTimeEntity {
     public void setRemoved(boolean removed) {
         this.removed = removed;
     }
+
+    public void setRaid(Raid raid) { this.raid = raid; }
 }

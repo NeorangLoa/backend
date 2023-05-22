@@ -28,9 +28,4 @@ public class Raid {
         this.name = name;
         this.itemLevel = itemLevel;
     }
-
-    public void updateRaid(PostRaidRequest postRaidRequest) {
-        this.name = postRaidRequest.getRaidName();
-        this.itemLevel = postRaidRequest.getRaidItemLevel();
-    }
 }
