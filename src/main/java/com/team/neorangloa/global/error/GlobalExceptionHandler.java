@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import static com.team.neorangloa.global.error.ErrorCode.INPUT_INVALID_VALUE;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 
 @Slf4j
@@ -39,6 +40,8 @@ public class GlobalExceptionHandler {
             MethodArgumentNotValidException e) {
         final ErrorResponse response = ErrorResponse.of(INPUT_INVALID_VALUE, e.getBindingResult());
         log.warn(e.getMessage());
-        return ResponseEntity.status(INPUT_INVALID_VALUE.getStatus()).body(response);
+
+        return new ResponseEntity<>(response, BAD_REQUEST);
     }
 }
+
