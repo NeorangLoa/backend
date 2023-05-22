@@ -47,7 +47,7 @@ public class PostRaidController {
     public ResponseEntity<ResultResponse> updateRaidPost(@PathVariable Long postRaidId,
                                                          @RequestBody @Valid PostRaidRequest postRaidRequest) {
         PostRaid postRaid = postRaidService.findPostRaidById(postRaidId);
-        postRaidService.updatePost(postRaid, postRaid.getRaid(), postRaidRequest);
+        postRaidService.updatePost(postRaid, postRaidRequest);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_UPDATE_SUCCESS));
     }

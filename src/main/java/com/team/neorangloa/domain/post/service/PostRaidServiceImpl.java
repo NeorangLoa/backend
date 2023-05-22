@@ -6,6 +6,7 @@ import com.team.neorangloa.domain.post.dto.PostRaidRequest;
 import com.team.neorangloa.domain.post.entity.PostRaid;
 import com.team.neorangloa.domain.post.repository.PostRaidRepository;
 import com.team.neorangloa.domain.raid.entity.Raid;
+import com.team.neorangloa.domain.raid.repository.RaidRepository;
 import com.team.neorangloa.global.error.ErrorCode;
 import com.team.neorangloa.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostRaidServiceImpl implements PostRaidService{
     private final PostRaidRepository postRaidRepository;
-
+    private final RaidRepository raidRepository;
     private final PostRaidMapper postRaidMapper;
 
     @Transactional
     @Override
     public void createNewPostRaid(PostRaidRequest postRaidRequest) {
         PostRaid postRaid = postRaidMapper.toEntity(postRaidRequest);
+        Raid raid = raidRepository.findRaidByName(postRaidRequest.getRaidName()).orElseThrow(
+                () -> new BusinessException(ErrorCode.RAID_NOT_FOUND_ERROR));
+        postRaid.setRaid(raid);
         postRaidRepository.save(postRaid);
     }
 
@@ -45,9 +49,12 @@ public class PostRaidServiceImpl implements PostRaidService{
 
     @Transactional
     @Override
-    public void updatePost(PostRaid postRaid, Raid raid , PostRaidRequest postRaidRequest) {
+    public void updatePost(PostRaid postRaid, PostRaidRequest postRaidRequest) {
         postRaid.updatePost(postRaidRequest);
-        raid.updateRaid(postRaidRequest);
+        Raid raid = raidRepository.findRaidByName(postRaidRequest.getRaidName()).orElseThrow(
+                () -> new BusinessException(ErrorCode.RAID_NOT_FOUND_ERROR));
+        postRaid.setRaid(raid);
+        postRaidRepository.save(postRaid);
     }
 
     @Transactional

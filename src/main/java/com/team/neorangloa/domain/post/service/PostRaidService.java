@@ -16,7 +16,7 @@ public interface PostRaidService {
 
     public List<PostRaidListResponse> getPosts(int page, int size);
 
-    public void updatePost(PostRaid postRaid, Raid raid, PostRaidRequest postRaidRequest);
+    public void updatePost(PostRaid postRaid, PostRaidRequest postRaidRequest);
 
     public void deletePost(PostRaid postRaid);
 }
