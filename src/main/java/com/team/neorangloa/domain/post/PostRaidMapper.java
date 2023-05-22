@@ -26,6 +26,7 @@ public class PostRaidMapper {
                         .level(postRaidRequest.getRaidLevel())
                         .itemLevel(postRaidRequest.getRaidItemLevel())
                         .build())
+                .removed(false)
                 .build();
     }
 

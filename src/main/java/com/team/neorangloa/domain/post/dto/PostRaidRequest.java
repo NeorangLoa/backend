@@ -19,11 +19,11 @@ public class PostRaidRequest {
     @NotEmpty
     private final String content;
 
-    @NotEmpty
+    @NotNull
     @Max(8)
     private final int maxAttacker;
 
-    @NotEmpty
+    @NotNull
     @Max(8)
     private final int maxSupporter;
 

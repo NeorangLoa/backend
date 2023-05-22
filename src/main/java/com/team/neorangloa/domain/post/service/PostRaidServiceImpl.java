@@ -26,6 +26,7 @@ public class PostRaidServiceImpl implements PostRaidService{
     @Override
     public void createNewPostRaid(PostRaidRequest postRaidRequest) {
         PostRaid postRaid = postRaidMapper.toEntity(postRaidRequest);
+        postRaidRepository.save(postRaid);
     }
 
     @Override
