@@ -4,18 +4,64 @@ package com.team.neorangloa.domain.post.controller;
 //import io.swagger.annotations.ApiOperation;
 //import io.swagger.annotations.ApiResponse;
 //import io.swagger.annotations.ApiResponses;
+import com.team.neorangloa.domain.post.PostMapper;
+import com.team.neorangloa.domain.post.dto.PostListResponse;
+import com.team.neorangloa.domain.post.dto.PostRequest;
+import com.team.neorangloa.domain.post.entity.Post;
+import com.team.neorangloa.domain.post.service.PostService;
+import com.team.neorangloa.global.result.ResultCode;
+import com.team.neorangloa.global.result.ResultResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 
+@RestController
 @Tag(name = "posts", description = "게시물 API")
 @RequestMapping("/api/v1/post")
-@RestController
+@RequiredArgsConstructor
 public class PostController {
-    @GetMapping()
-    public String hello(){
-        return "Hello World";
+    private final PostService postService;
+
+    private final PostMapper postMapper;
+
+    @PostMapping
+    public ResponseEntity<ResultResponse> createNewPost(@RequestBody @Valid PostRequest postRequest) {
+        postService.createNewPost(postRequest);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_CREATE_SUCCESS));
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<ResultResponse> getPost(@PathVariable Long postId) {
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_GET_SUCCESS
+                ,postMapper.of(postService.findPostById(postId))));
+    }
+
+    @GetMapping("/all/{page}")
+    public ResponseEntity<ResultResponse> getPosts(@PathVariable Integer page
+            ,@RequestParam(defaultValue = "10") Integer size) {
+        List<PostListResponse> posts = postService.getPosts(page,size);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_PAGING_GET_SUCCESS, posts));
+    }
+
+    @PutMapping("/{postId}")
+    public ResponseEntity<ResultResponse> updatePost(@PathVariable Long postId,
+                                                     @RequestBody @Valid PostRequest postRequest) {
+        Post post = postService.findPostById(postId);
+        postService.updatePost(post, postRequest);
+
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_UPDATE_SUCCESS));
+    }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<ResultResponse> deletePost(@PathVariable Long postId) {
+        Post post = postService.findPostById(postId);
+        postService.deletePost(post);
+
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_DELETE_SUCCESS));
     }
 }
