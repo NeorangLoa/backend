@@ -1,5 +1,6 @@
 package com.team.neorangloa.global.error;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,9 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
-@Getter
+
+import lombok.*;
+import org.springframework.validation.BindingResult;
+
 @Builder
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ErrorResponse {
     private String businessCode;
     private String errorMessage;
@@ -37,13 +42,13 @@ public class ErrorResponse {
     public static ErrorResponse of(ErrorCode code) {
         return new ErrorResponse(code);
     }
+
     @Getter
     @AllArgsConstructor
     public static class FieldError {
         private String field;
         private String value;
         private String reason;
-
 
         private static List<FieldError> of(final BindingResult bindingResult) {
             final List<org.springframework.validation.FieldError> fieldErrors =
@@ -59,3 +64,4 @@ public class ErrorResponse {
         }
     }
 }
+
