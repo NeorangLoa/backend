@@ -7,14 +7,11 @@ import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user")
+@RequestMapping("/ap1/user")
 public class UserController {
     private final UserService userService;
 
@@ -24,4 +21,8 @@ public class UserController {
         userService.signup(signupRequestDto);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.USER_SIGNUP_SUCCESS));
     }
+
+    @GetMapping
+    public ResponseEntity<ResultResponse> getUserProfile
+
 }

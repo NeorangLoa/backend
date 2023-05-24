@@ -23,4 +23,13 @@ public class LoginService {
         User user = userService.findUserByEmail(loginRequestDto.getEmail());
         return PasswordEncryptionUtil.isSamePassword(loginRequestDto.getPassword(), user.getPassword());
     }
+
+    public Long getLoginUserId() {
+        return (Long) httpSession.getAttribute(USER_ID);
+    }
+
+    public boolean isUserLogin() {
+        return getLoginUserId() != null;
+    }
+
 }
