@@ -6,15 +6,14 @@ import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.domain.user.exception.InvalidPasswordException;
 import com.team.neorangloa.domain.user.service.LoginService;
 import com.team.neorangloa.domain.user.service.UserService;
+import com.team.neorangloa.global.annotation.LoginRequired;
 import com.team.neorangloa.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import static com.team.neorangloa.global.result.ResultCode.USER_LOGIN_SUCCESS;
+import static com.team.neorangloa.global.result.ResultCode.USER_LOGOUT_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,4 +37,10 @@ public class LoginController {
         return ResponseEntity.ok(ResultResponse.of(USER_LOGIN_SUCCESS));
     }
 
+    @LoginRequired
+    @GetMapping(LOGOUT_PATH)
+    public ResponseEntity<ResultResponse> logout(){
+        loginService.logout();
+        return ResponseEntity.ok(ResultResponse.of(USER_LOGOUT_SUCCESS));
+    }
 }

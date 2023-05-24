@@ -3,6 +3,7 @@ package com.team.neorangloa.domain.user.controller;
 
 import com.team.neorangloa.domain.user.dto.SignupRequestDto;
 import com.team.neorangloa.domain.user.service.UserService;
+import com.team.neorangloa.global.annotation.LoginRequired;
 import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,5 @@ public class UserController {
         userService.signup(signupRequestDto);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.USER_SIGNUP_SUCCESS));
     }
-
-    @GetMapping
-    public ResponseEntity<ResultResponse> getUserProfile
 
 }
