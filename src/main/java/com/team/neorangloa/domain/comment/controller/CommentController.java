@@ -1,7 +1,7 @@
 package com.team.neorangloa.domain.comment.controller;
 
-import com.team.neorangloa.domain.comment.CommentMapper;
 import com.team.neorangloa.domain.comment.dto.CommentRequest;
+import com.team.neorangloa.domain.comment.dto.CommentResponse;
 import com.team.neorangloa.domain.comment.dto.CommentUpdateRequest;
 import com.team.neorangloa.domain.comment.entity.Comment;
 import com.team.neorangloa.domain.comment.service.CommentService;
@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @Tag(name = "comments", description = "자유게시글 댓글 API")
@@ -20,12 +21,18 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
-    private final CommentMapper commentMapper;
 
     @PostMapping
     public ResponseEntity<ResultResponse> createComment(@RequestBody @Valid CommentRequest commentRequest) {
         commentService.createComment(commentRequest);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.REGISTER_COMMENT_SUCCESS));
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<ResultResponse> getComments(@PathVariable Long postId
+            ,@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size ) {
+        List<CommentResponse> comments = commentService.findCommentByPostId(page, size, postId);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_FIND_SUCCESS,comments));
     }
 
     @PutMapping("/{commentId}")

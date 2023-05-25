@@ -2,6 +2,7 @@ package com.team.neorangloa.domain.comment.service;
 
 import com.team.neorangloa.domain.comment.CommentMapper;
 import com.team.neorangloa.domain.comment.dto.CommentRequest;
+import com.team.neorangloa.domain.comment.dto.CommentResponse;
 import com.team.neorangloa.domain.comment.dto.CommentUpdateRequest;
 import com.team.neorangloa.domain.comment.entity.Comment;
 import com.team.neorangloa.domain.comment.repository.CommentRepository;
@@ -10,8 +11,11 @@ import com.team.neorangloa.domain.post.service.PostService;
 import com.team.neorangloa.global.error.ErrorCode;
 import com.team.neorangloa.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -46,5 +50,13 @@ public class CommentServiceImpl implements CommentService{
     public void deleteComment(Comment comment) {
         comment.setRemoved(true);
         commentRepository.save(comment);
+    }
+
+    @Transactional
+    @Override
+    public List<CommentResponse> findCommentByPostId(Integer page, Integer size, Long postId) {
+        PageRequest pageRequest = PageRequest.of(page,size);
+        List<Comment> comments = commentRepository.findCommentByPostId(pageRequest, postId);
+        return commentMapper.toDtoList(comments);
     }
 }
