@@ -35,4 +35,7 @@ public class LoginService {
         return getLoginUserId() != null;
     }
 
+    public User getLoginUser() {
+        return userService.findUserById(getLoginUserId());
+    }
 }
