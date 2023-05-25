@@ -1,7 +1,6 @@
 package com.team.neorangloa.domain.user.controller;
 
-import com.team.neorangloa.domain.user.dto.LoginRequestDto;
-import com.team.neorangloa.domain.user.dto.LoginUser;
+import com.team.neorangloa.domain.user.dto.LoginRequest;
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.domain.user.exception.InvalidPasswordException;
 import com.team.neorangloa.domain.user.service.LoginService;
@@ -26,13 +25,13 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping(LOGIN_PATH)
-    public ResponseEntity<ResultResponse> login(@RequestBody LoginRequestDto loginRequestDto) {
-        boolean isValidUser = loginService.isValidUser(loginRequestDto);
+    public ResponseEntity<ResultResponse> login(@RequestBody LoginRequest loginRequest) {
+        boolean isValidUser = loginService.isValidUser(loginRequest);
 
         if (!isValidUser) {
             throw new InvalidPasswordException();
         }
-        User user = userService.findUserByEmail(loginRequestDto.getEmail());
+        User user = userService.findUserByEmail(loginRequest.getEmail());
         loginService.login(user.getId());
         return ResponseEntity.ok(ResultResponse.of(USER_LOGIN_SUCCESS));
     }

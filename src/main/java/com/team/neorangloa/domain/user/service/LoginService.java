@@ -1,8 +1,7 @@
 package com.team.neorangloa.domain.user.service;
 
-import com.team.neorangloa.domain.user.dto.LoginRequestDto;
+import com.team.neorangloa.domain.user.dto.LoginRequest;
 import com.team.neorangloa.domain.user.entity.User;
-import com.team.neorangloa.domain.user.exception.InvalidPasswordException;
 import com.team.neorangloa.global.util.PasswordEncryptionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,9 +21,9 @@ public class LoginService {
     public void logout(){
         httpSession.removeAttribute(USER_ID);
     }
-    public boolean isValidUser(LoginRequestDto loginRequestDto) {
-        User user = userService.findUserByEmail(loginRequestDto.getEmail());
-        return PasswordEncryptionUtil.isSamePassword(loginRequestDto.getPassword(), user.getPassword());
+    public boolean isValidUser(LoginRequest loginRequest) {
+        User user = userService.findUserByEmail(loginRequest.getEmail());
+        return PasswordEncryptionUtil.isSamePassword(loginRequest.getPassword(), user.getPassword());
     }
 
     public Long getLoginUserId() {

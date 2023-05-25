@@ -41,4 +41,8 @@ public class User extends BaseTimeEntity{
     public void encryptPassword(){
         this.password = PasswordEncryptionUtil.encrypt(password);
     }
+
+    public void updateNickname(String nickname){
+        this.nickname = nickname;
+    }
 }

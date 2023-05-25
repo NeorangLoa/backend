@@ -3,7 +3,7 @@ package com.team.neorangloa.domain.user.dto;
 import lombok.Getter;
 
 @Getter
-public class SignupRequestDto {
+public class SignupRequest {
     private String email;
 
     private String password;
