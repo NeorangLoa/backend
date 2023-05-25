@@ -47,4 +47,5 @@ public class Comment extends BaseTimeEntity {
         this.content = request.getContent();
     }
 
+    public void setRemoved(boolean removed) { this.removed = removed; }
 }

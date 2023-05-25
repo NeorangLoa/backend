@@ -10,4 +10,5 @@ public interface CommentService {
     public Comment findCommentById(Long commentId);
 
     public void updateComment(Comment comment, CommentUpdateRequest request);
+    public void deleteComment(Comment comment);
 }

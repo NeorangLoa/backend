@@ -40,4 +40,11 @@ public class CommentServiceImpl implements CommentService{
     public void updateComment(Comment comment, CommentUpdateRequest request) {
         comment.updateComment(request);
     }
+
+    @Transactional
+    @Override
+    public void deleteComment(Comment comment) {
+        comment.setRemoved(true);
+        commentRepository.save(comment);
+    }
 }
