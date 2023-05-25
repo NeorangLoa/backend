@@ -3,6 +3,7 @@ package com.team.neorangloa.domain.comment.entity;
 import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.entity.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,12 +27,19 @@ public class Comment extends BaseTimeEntity {
     private boolean removed;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", nullable = false)
+    @JoinColumn(name = "USER_ID")
     private User author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_ID", nullable = false)
     private Post post;
 
+    @Builder
+    public Comment(String content, boolean removed, User author, Post post) {
+        this.content = content;
+        this.removed = removed;
+        this.author = author;
+        this.post = post;
+    }
 
 }
