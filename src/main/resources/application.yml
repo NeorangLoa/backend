@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/neorangloa?serverTimezone=Asia/Seoul
-    username: #??? ?? DB username
-    password: #DB user? ????
+    username: root
+    password: aelx0525
 
   jpa:
     open-in-view: true
