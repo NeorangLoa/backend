@@ -1,5 +1,6 @@
 package com.team.neorangloa.domain.comment.entity;
 
+import com.team.neorangloa.domain.comment.dto.CommentUpdateRequest;
 import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.entity.BaseTimeEntity;
@@ -40,6 +41,10 @@ public class Comment extends BaseTimeEntity {
         this.removed = removed;
         this.author = author;
         this.post = post;
+    }
+
+    public void updateComment(CommentUpdateRequest request) {
+        this.content = request.getContent();
     }
 
 }

@@ -26,6 +26,7 @@ public enum ResultCode {
     // comment
     REGISTER_COMMENT_SUCCESS("C001", "댓글 등록 성공"),
     COMMENT_FIND_SUCCESS("C002", "댓글 찾기 성공"),
+    COMMENT_UPDATE_SUCCESS("C003", "댓글 수정 성공")
     ;
 
     private final String code;

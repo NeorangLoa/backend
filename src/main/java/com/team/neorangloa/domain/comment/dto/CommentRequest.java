@@ -9,9 +9,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @RequiredArgsConstructor
 public class CommentRequest { // 유저 정보는 나중에 추가
-
     @NotNull
-    private Long postId;
+    private final Long postId;
     @NotEmpty
-    private String content;
+    private final String content;
 }

@@ -2,6 +2,8 @@ package com.team.neorangloa.domain.comment.controller;
 
 import com.team.neorangloa.domain.comment.CommentMapper;
 import com.team.neorangloa.domain.comment.dto.CommentRequest;
+import com.team.neorangloa.domain.comment.dto.CommentUpdateRequest;
+import com.team.neorangloa.domain.comment.entity.Comment;
 import com.team.neorangloa.domain.comment.service.CommentService;
 import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
@@ -24,5 +26,14 @@ public class CommentController {
     public ResponseEntity<ResultResponse> createComment(@RequestBody @Valid CommentRequest commentRequest) {
         commentService.createComment(commentRequest);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.REGISTER_COMMENT_SUCCESS));
+    }
+
+    @PutMapping("/{commentId}")
+    public ResponseEntity<ResultResponse> updateComment(@PathVariable Long commentId,
+                                                        @RequestBody @Valid CommentUpdateRequest request) {
+        Comment comment = commentService.findCommentById(commentId);
+        commentService.updateComment(comment, request);
+
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_UPDATE_SUCCESS));
     }
 }
