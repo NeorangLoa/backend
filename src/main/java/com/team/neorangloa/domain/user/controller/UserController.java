@@ -61,7 +61,7 @@ public class UserController {
     public ResponseEntity<ResultResponse> updatePassword(@LoginUser User loginUser,
                                                          @RequestBody UpdatePasswordRequest updatePasswordRequest) {
         Long logInUserId = loginUser.getId();
-        if (!userService.isValidUser(logInUserId,updatePasswordRequest)) {
+        if (!userService.isValidPassword(logInUserId,updatePasswordRequest)) {
             throw new InvalidPasswordException();
         }
         userService.updatePassword(logInUserId, updatePasswordRequest);

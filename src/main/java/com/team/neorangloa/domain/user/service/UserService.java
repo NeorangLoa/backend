@@ -41,7 +41,7 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    public boolean isValidUser(Long userId, UpdatePasswordRequest updatePasswordRequest) {
+    public boolean isValidPassword(Long userId, UpdatePasswordRequest updatePasswordRequest) {
         User user = findUserById(userId);
         return PasswordEncryptionUtil.isSamePassword(updatePasswordRequest.getCurrentPassword(), user.getPassword());
     }
