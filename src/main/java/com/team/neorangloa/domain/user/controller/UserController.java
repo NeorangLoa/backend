@@ -28,12 +28,6 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
 
-    private final UserMapper userMapper;
-
-    private final UserRepository userRepository;
-
-    private final HttpSession httpSession;
-
     @PostMapping
     public ResponseEntity<ResultResponse> signup(
             @RequestBody SignupRequest signupRequest) {
@@ -50,7 +44,7 @@ public class UserController {
     @PutMapping("/nickname")
     @LoginRequired
     public ResponseEntity<ResultResponse> updateNickname(@LoginUser User loginUser,
-                                                         @RequestBody UpdateNicknameRequest updateNicknameRequest) {
+                                                         @RequestBody @Valid UpdateNicknameRequest updateNicknameRequest) {
         Long logInUserId = loginUser.getId();
         userService.updateNickname(logInUserId, updateNicknameRequest);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.UPDATE_USER_NICKNAME_SUCCESS,ProfileResponse.of(loginUser)));
@@ -59,7 +53,7 @@ public class UserController {
     @PutMapping("/password")
     @LoginRequired
     public ResponseEntity<ResultResponse> updatePassword(@LoginUser User loginUser,
-                                                         @RequestBody UpdatePasswordRequest updatePasswordRequest) {
+                                                         @RequestBody @Valid UpdatePasswordRequest updatePasswordRequest) {
         Long logInUserId = loginUser.getId();
         if (!userService.isValidPassword(logInUserId,updatePasswordRequest)) {
             throw new InvalidPasswordException();
