@@ -14,6 +14,7 @@ public enum ResultCode {
     USER_LOGOUT_SUCCESS("U005", "회원 로그아웃 성공"),
     GET_LOGIN_USER_SUCCESS("U006", "로그인 되어있는 회원 조회 성공"),
     UPDATE_USER_NICKNAME_SUCCESS("U007","회원 닉네임 수정 성공"),
+    UPDATE_USER_PASSWORD_SUCCESS("U008","회원 패스워드 수정 성공"),
 
     // post
     POST_CREATE_SUCCESS("S001", "게시물 생성 성공"),

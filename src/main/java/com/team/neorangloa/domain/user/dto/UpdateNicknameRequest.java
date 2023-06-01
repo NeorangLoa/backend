@@ -2,12 +2,15 @@ package com.team.neorangloa.domain.user.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
 
 //@Builder
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class UpdateNicknameRequest {
-    private final String email;
-    private final String nickname;
+
+    private String nickname;
 }

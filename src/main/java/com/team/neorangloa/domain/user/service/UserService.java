@@ -1,13 +1,12 @@
 package com.team.neorangloa.domain.user.service;
 
-import com.team.neorangloa.domain.user.dto.ProfileResponse;
-import com.team.neorangloa.domain.user.dto.SignupRequest;
-import com.team.neorangloa.domain.user.dto.UpdateNicknameRequest;
+import com.team.neorangloa.domain.user.dto.*;
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.domain.user.mapper.UserMapper;
 import com.team.neorangloa.domain.user.repository.UserRepository;
 import com.team.neorangloa.domain.user.exception.DuplicatedEmailException;
 import com.team.neorangloa.domain.user.exception.UserNotFoundException;
+import com.team.neorangloa.global.util.PasswordEncryptionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,9 +41,21 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
+    public boolean isValidUser(Long userId, UpdatePasswordRequest updatePasswordRequest) {
+        User user = findUserById(userId);
+        return PasswordEncryptionUtil.isSamePassword(updatePasswordRequest.getCurrentPassword(), user.getPassword());
+    }
+
     @Transactional
     public void updateNickname(Long userId, UpdateNicknameRequest updateNicknameRequest) {
         User logInUser = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         logInUser.updateNickname(updateNicknameRequest.getNickname());
+    }
+
+    @Transactional
+    public void updatePassword(Long userId, UpdatePasswordRequest updatePasswordRequest) {
+        User logInUser = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        logInUser.updatePassword(updatePasswordRequest.getNewPassword());
+        logInUser.encryptPassword();
     }
 }

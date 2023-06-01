@@ -26,9 +26,8 @@ public class LoginController {
 
     @PostMapping(LOGIN_PATH)
     public ResponseEntity<ResultResponse> login(@RequestBody LoginRequest loginRequest) {
-        boolean isValidUser = loginService.isValidUser(loginRequest);
 
-        if (!isValidUser) {
+        if (!loginService.isValidUser(loginRequest)) {
             throw new InvalidPasswordException();
         }
         User user = userService.findUserByEmail(loginRequest.getEmail());
