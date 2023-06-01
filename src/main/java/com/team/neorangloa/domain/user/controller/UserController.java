@@ -30,7 +30,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<ResultResponse> signup(
-            @RequestBody SignupRequest signupRequest) {
+            @RequestBody @Valid SignupRequest signupRequest) {
         userService.signup(signupRequest);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.USER_SIGNUP_SUCCESS));
     }
