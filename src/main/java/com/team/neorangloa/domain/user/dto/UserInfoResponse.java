@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 @Builder
-public class ProfileResponse {
+public class UserInfoResponse {
     private final String email;
     private final String nickname;
 
-    public static ProfileResponse of(User user) {
-        return ProfileResponse.builder()
+    public static UserInfoResponse of(User user) {
+        return UserInfoResponse.builder()
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .build();

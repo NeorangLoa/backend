@@ -1,25 +1,21 @@
 package com.team.neorangloa.domain.user.controller;
 
 
-import com.team.neorangloa.domain.user.dto.ProfileResponse;
+import com.team.neorangloa.domain.user.dto.UserInfoResponse;
 import com.team.neorangloa.domain.user.dto.SignupRequest;
 import com.team.neorangloa.domain.user.dto.UpdateNicknameRequest;
 import com.team.neorangloa.domain.user.dto.UpdatePasswordRequest;
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.domain.user.exception.InvalidPasswordException;
-import com.team.neorangloa.domain.user.mapper.UserMapper;
-import com.team.neorangloa.domain.user.repository.UserRepository;
 import com.team.neorangloa.domain.user.service.UserService;
 import com.team.neorangloa.global.annotation.LoginRequired;
 import com.team.neorangloa.global.annotation.LoginUser;
 import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController
@@ -35,10 +31,10 @@ public class UserController {
         return ResponseEntity.ok(ResultResponse.of(ResultCode.USER_SIGNUP_SUCCESS));
     }
 
-    @GetMapping("/user-info")
-    @LoginRequired
-    public ResponseEntity<ResultResponse> getLoginUserInfo(@LoginUser User loginUser) {
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.GET_LOGIN_USER_SUCCESS,ProfileResponse.of(loginUser)));
+    @GetMapping("/user-info/{userId}")
+    public ResponseEntity<ResultResponse> getLoginUserInfo(@PathVariable Long userId) {
+        UserInfoResponse userInfoResponse = userService.findUserDtoById(userId);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.GET_USER_SUCCESS, userInfoResponse));
     }
 
     @PutMapping("/nickname")
@@ -47,7 +43,7 @@ public class UserController {
                                                          @RequestBody @Valid UpdateNicknameRequest updateNicknameRequest) {
         Long logInUserId = loginUser.getId();
         userService.updateNickname(logInUserId, updateNicknameRequest);
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.UPDATE_USER_NICKNAME_SUCCESS,ProfileResponse.of(loginUser)));
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.UPDATE_USER_NICKNAME_SUCCESS, UserInfoResponse.of(loginUser)));
     }
 
     @PutMapping("/password")
