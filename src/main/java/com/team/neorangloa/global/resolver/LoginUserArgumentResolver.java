@@ -10,6 +10,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RequiredArgsConstructor
 @Configuration
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
@@ -23,6 +25,8 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
-        return loginService.getLoginUser();
+        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
+        String sessionId = request.getSession().getId();
+        return loginService.getLoginUser(sessionId);
     }
 }

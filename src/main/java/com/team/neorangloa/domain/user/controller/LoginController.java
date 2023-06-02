@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import static com.team.neorangloa.global.result.ResultCode.USER_LOGIN_SUCCESS;
@@ -27,20 +28,19 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping(LOGIN_PATH)
-    public ResponseEntity<ResultResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
-
+    public ResponseEntity<ResultResponse> login(HttpServletRequest request, @RequestBody @Valid LoginRequest loginRequest) {
         if (!loginService.isValidUser(loginRequest)) {
             throw new InvalidPasswordException();
         }
         User user = userService.findUserByEmail(loginRequest.getEmail());
-        loginService.login(user.getId());
+        loginService.login(request,user.getId());
         return ResponseEntity.ok(ResultResponse.of(USER_LOGIN_SUCCESS));
     }
 
     @LoginRequired
     @GetMapping(LOGOUT_PATH)
-    public ResponseEntity<ResultResponse> logout(){
-        loginService.logout();
+    public ResponseEntity<ResultResponse> logout(HttpServletRequest request){
+        loginService.logout(request);
         return ResponseEntity.ok(ResultResponse.of(USER_LOGOUT_SUCCESS));
     }
 }
