@@ -18,6 +18,7 @@ public class LoginService {
     public void login(long id) {
         httpSession.setAttribute(USER_ID, id);
     }
+ 
     public void logout(){
         httpSession.removeAttribute(USER_ID);
     }
