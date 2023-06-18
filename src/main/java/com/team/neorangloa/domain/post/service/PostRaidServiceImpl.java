@@ -14,6 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service
@@ -37,6 +40,44 @@ public class PostRaidServiceImpl implements PostRaidService{
     public PostRaid findPostRaidById(Long postRaidId) {
         return postRaidRepository.findPostRaidById(postRaidId).orElseThrow(
                 () -> new BusinessException(ErrorCode.POST_NOT_FOUND_ERROR));
+    }
+
+    // 조회수 중복 방지 함수
+    @Override
+    public void updateViewCounts(Long postRaidId, HttpServletRequest request, HttpServletResponse response) {
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("postRaidView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+            if(!oldCookie.getValue().contains("[" + postRaidId.toString() + "]")){
+                increaseViewCounts(postRaidId);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + postRaidId + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+            }
+        } else {
+            increaseViewCounts(postRaidId);
+            Cookie newCookie = new Cookie("postRaidView", "[" + postRaidId + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            //newCookie.setDomain(".우리가 사용하는 도메인 주소"); // 우리가 사용하는 도메인 주소 예시: ".tistory.com"
+            response.addCookie(newCookie);
+        }
+    }
+
+    // 조회수 증가 함수
+    @Override
+    @Transactional
+    public void increaseViewCounts(Long postRaidId) {
+        postRaidRepository.updateViewCounts(postRaidId);
     }
 
     @Transactional
