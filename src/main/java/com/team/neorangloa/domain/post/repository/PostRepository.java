@@ -4,6 +4,7 @@ import com.team.neorangloa.domain.post.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
@@ -16,4 +17,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 검색 조건 없는 모든 게시글 조회
     @Query("SELECT p FROM Post p WHERE p.removed = false ORDER BY p.id DESC")
     Page<Post> findAllPostByCreatedAtDesc(Pageable pageable);
+
+    @Modifying
+    @Query("UPDATE Post p SET p.viewCounts = p.viewCounts + 1 WHERE p.id = :postId")
+    void updateViewCounts(Long postId);
 }
