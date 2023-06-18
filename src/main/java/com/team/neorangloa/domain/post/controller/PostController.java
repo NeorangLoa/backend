@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -36,7 +38,8 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<ResultResponse> getPost(@PathVariable Long postId) {
+    public ResponseEntity<ResultResponse> getPost(@PathVariable Long postId, HttpServletRequest request, HttpServletResponse response) {
+        postService.updateViewCounts(postId, request, response);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_GET_SUCCESS
                 ,postMapper.of(postService.findPostById(postId))));
     }

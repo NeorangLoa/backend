@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -31,7 +33,8 @@ public class PostRaidController {
     }
 
     @GetMapping("/{postRaidId}")
-    public ResponseEntity<ResultResponse> getPostRaid(@PathVariable Long postRaidId) {
+    public ResponseEntity<ResultResponse> getPostRaid(@PathVariable Long postRaidId, HttpServletRequest request, HttpServletResponse response) {
+        postRaidService.updateViewCounts(postRaidId, request, response);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_GET_SUCCESS,
                 postRaidMapper.of(postRaidService.findPostRaidById(postRaidId))));
     }
