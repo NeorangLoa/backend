@@ -47,7 +47,6 @@ public class LoginController {
 
         return ResponseEntity.ok().header("Set-Cookie", sessionCookie.toString()).body(ResultResponse.of(USER_LOGIN_SUCCESS));
 
-//        return ResponseEntity.ok(ResultResponse.of(USER_LOGIN_SUCCESS,sessionId));
     }
 
     @LoginRequired

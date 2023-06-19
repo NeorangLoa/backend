@@ -17,9 +17,6 @@ public class LoginService {
     private final UserService userService;
 
     public String login(HttpServletRequest request, long id) {
-//        HttpSession session = request.getSession(false);
-//        String sessionId = session.getId();
-//        session.setAttribute(sessionId, id);
         // 기존 세션 가져오기
         HttpSession session = request.getSession(false);
 
