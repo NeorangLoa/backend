@@ -2,10 +2,12 @@ package com.team.neorangloa.domain.user.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
 @Getter
+@NoArgsConstructor
 public class LoginRequest {
     @NotEmpty
     private String email;

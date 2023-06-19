@@ -26,6 +26,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (!loginService.isUserLogin(sessionId)) {
             System.out.println(sessionId);
         }
+
         if (isLoginRequiredMethod(handler) && !loginService.isUserLogin(sessionId)) {
             throw new UnAuthorizedAccessException();
         }

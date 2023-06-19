@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 
 @Service
 @RequiredArgsConstructor
@@ -15,9 +16,23 @@ public class LoginService {
     private final HttpSession httpSession;
     private final UserService userService;
 
-    public void login(HttpServletRequest request, long id) {
+    public String login(HttpServletRequest request, long id) {
+//        HttpSession session = request.getSession(false);
+//        String sessionId = session.getId();
+//        session.setAttribute(sessionId, id);
+        // 기존 세션 가져오기
         HttpSession session = request.getSession(false);
-        session.setAttribute(session.getId(), id);
+
+        if (session != null) {
+            // 기존 세션이 존재하면 세션을 만료시킴
+            session.invalidate();
+        }
+
+        // 새로운 세션 생성 및 세션 ID 저장
+        HttpSession newSession = request.getSession(true);
+        String newSessionId = newSession.getId();
+        newSession.setAttribute(newSessionId, id);
+        return newSessionId;
     }
     public void logout(HttpServletRequest request){
         HttpSession session = request.getSession(false); // 현재 세션 가져오기 (세션이 없는 경우 null 반환)
@@ -31,6 +46,14 @@ public class LoginService {
     }
 
     public Long getLoginUserId(String sessionId) {
+
+        Enumeration<String> attributeNames = httpSession.getAttributeNames();
+        while (attributeNames.hasMoreElements()) {
+            String attributeName = attributeNames.nextElement();
+            Object attributeValue = httpSession.getAttribute(attributeName);
+            System.out.println(attributeName);
+            System.out.println(attributeValue);
+        }
         return (Long) httpSession.getAttribute(sessionId);
     }
 
