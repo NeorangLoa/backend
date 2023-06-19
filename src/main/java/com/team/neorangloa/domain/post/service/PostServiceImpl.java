@@ -21,6 +21,7 @@ public class PostServiceImpl implements PostService {
 
     private final PostMapper postMapper;
 
+    @Override
     @Transactional
     public void createNewPost(PostRequest postRequest) {
         Post post = postMapper.toEntity(postRequest);
