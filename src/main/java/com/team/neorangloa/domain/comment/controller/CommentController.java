@@ -5,6 +5,9 @@ import com.team.neorangloa.domain.comment.dto.CommentResponse;
 import com.team.neorangloa.domain.comment.dto.CommentUpdateRequest;
 import com.team.neorangloa.domain.comment.entity.Comment;
 import com.team.neorangloa.domain.comment.service.CommentService;
+import com.team.neorangloa.domain.user.entity.User;
+import com.team.neorangloa.global.annotation.LoginRequired;
+import com.team.neorangloa.global.annotation.LoginUser;
 import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,8 +26,10 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<ResultResponse> createComment(@RequestBody @Valid CommentRequest commentRequest) {
-        commentService.createComment(commentRequest);
+    @LoginRequired
+    public ResponseEntity<ResultResponse> createComment(@RequestBody @Valid CommentRequest commentRequest,
+                                                        @LoginUser User loginUser) {
+        commentService.createComment(commentRequest, loginUser);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.REGISTER_COMMENT_SUCCESS));
     }
 
@@ -36,6 +41,7 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
+    @LoginRequired
     public ResponseEntity<ResultResponse> updateComment(@PathVariable Long commentId,
                                                         @RequestBody @Valid CommentUpdateRequest request) {
         Comment comment = commentService.findCommentById(commentId);
@@ -45,6 +51,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
+    @LoginRequired
     public ResponseEntity<ResultResponse> deleteComment(@PathVariable Long commentId) {
         Comment comment = commentService.findCommentById(commentId);
         commentService.deleteComment(comment);

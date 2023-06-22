@@ -4,6 +4,7 @@ import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRequest;
 import com.team.neorangloa.domain.post.dto.PostResponse;
 import com.team.neorangloa.domain.post.entity.Post;
+import com.team.neorangloa.domain.user.entity.User;
 import lombok.Builder;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +14,13 @@ import java.util.stream.Collectors;
 @Component
 public class PostMapper {
 
-    public Post toEntity(PostRequest postRequest) {
+    public Post toEntity(PostRequest postRequest, User loginUser) {
         return Post.builder()
                 .title(postRequest.getTitle())
                 .content(postRequest.getContent())
                 .post_image(postRequest.getImage())
                 .removed(false)
+                .author(loginUser)
                 .build();
     }
 

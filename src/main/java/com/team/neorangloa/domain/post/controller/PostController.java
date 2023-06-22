@@ -9,6 +9,9 @@ import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRequest;
 import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.service.PostService;
+import com.team.neorangloa.domain.user.entity.User;
+import com.team.neorangloa.global.annotation.LoginRequired;
+import com.team.neorangloa.global.annotation.LoginUser;
 import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,8 +33,10 @@ public class PostController {
     private final PostMapper postMapper;
 
     @PostMapping
-    public ResponseEntity<ResultResponse> createNewPost(@RequestBody @Valid PostRequest postRequest) {
-        postService.createNewPost(postRequest);
+    @LoginRequired
+    public ResponseEntity<ResultResponse> createNewPost(@RequestBody @Valid PostRequest postRequest,
+                                                        @LoginUser User loginUser) {
+        postService.createNewPost(postRequest, loginUser);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_CREATE_SUCCESS));
     }
 
@@ -49,8 +54,10 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
+    @LoginRequired
     public ResponseEntity<ResultResponse> updatePost(@PathVariable Long postId,
-                                                     @RequestBody @Valid PostRequest postRequest) {
+                                                     @RequestBody @Valid PostRequest postRequest,
+                                                     @LoginUser User loginUser) {
         Post post = postService.findPostById(postId);
         postService.updatePost(post, postRequest);
 
@@ -58,6 +65,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
+    @LoginRequired
     public ResponseEntity<ResultResponse> deletePost(@PathVariable Long postId) {
         Post post = postService.findPostById(postId);
         postService.deletePost(post);

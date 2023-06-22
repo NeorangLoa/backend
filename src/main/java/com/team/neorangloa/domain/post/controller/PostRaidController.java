@@ -5,6 +5,9 @@ import com.team.neorangloa.domain.post.dto.PostRaidListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidRequest;
 import com.team.neorangloa.domain.post.entity.PostRaid;
 import com.team.neorangloa.domain.post.service.PostRaidService;
+import com.team.neorangloa.domain.user.entity.User;
+import com.team.neorangloa.global.annotation.LoginRequired;
+import com.team.neorangloa.global.annotation.LoginUser;
 import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,8 +28,10 @@ public class PostRaidController {
     private final PostRaidMapper postRaidMapper;
 
     @PostMapping
-    public ResponseEntity<ResultResponse> createNewPostRaid(@RequestBody @Valid PostRaidRequest postRaidRequest) {
-        postRaidService.createNewPostRaid(postRaidRequest);
+    @LoginRequired
+    public ResponseEntity<ResultResponse> createNewPostRaid(@RequestBody @Valid PostRaidRequest postRaidRequest,
+                                                            @LoginUser User loginUser) {
+        postRaidService.createNewPostRaid(postRaidRequest, loginUser);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_CREATE_SUCCESS));
     }
 
@@ -44,6 +49,7 @@ public class PostRaidController {
     }
 
     @PutMapping("/{postRaidId}")
+    @LoginRequired
     public ResponseEntity<ResultResponse> updateRaidPost(@PathVariable Long postRaidId,
                                                          @RequestBody @Valid PostRaidRequest postRaidRequest) {
         PostRaid postRaid = postRaidService.findPostRaidById(postRaidId);
@@ -53,6 +59,7 @@ public class PostRaidController {
     }
 
     @DeleteMapping("/{postRaidId}")
+    @LoginRequired
     public ResponseEntity<ResultResponse> deleteRaidPost(@PathVariable Long postRaidId) {
         PostRaid postRaid = postRaidService.findPostRaidById(postRaidId);
         postRaidService.deletePost(postRaid);

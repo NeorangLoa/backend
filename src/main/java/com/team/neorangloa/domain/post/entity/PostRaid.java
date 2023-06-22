@@ -43,7 +43,7 @@ public class PostRaid extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
-    private User user;
+    private User author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RAID_ID")
@@ -51,14 +51,14 @@ public class PostRaid extends BaseTimeEntity {
 
     @Builder
     public PostRaid(String title, String content, boolean removed, int maxAttacker, int maxSupporter,
-                    LocalDateTime finishedAt, User user, Raid raid) {
+                    LocalDateTime finishedAt, User author, Raid raid) {
         this.title= title;
         this.content = content;
         this.removed = removed;
         this.maxAttacker = maxAttacker;
         this.maxSupporter = maxSupporter;
         this.finishedAt = finishedAt;
-        this.user = user;
+        this.author = author;
         this.raid = raid;
     }
 

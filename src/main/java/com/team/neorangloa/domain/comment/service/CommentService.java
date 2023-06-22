@@ -4,11 +4,12 @@ import com.team.neorangloa.domain.comment.dto.CommentRequest;
 import com.team.neorangloa.domain.comment.dto.CommentResponse;
 import com.team.neorangloa.domain.comment.dto.CommentUpdateRequest;
 import com.team.neorangloa.domain.comment.entity.Comment;
+import com.team.neorangloa.domain.user.entity.User;
 
 import java.util.List;
 
 public interface CommentService {
-    public void createComment(CommentRequest commentRequest);
+    public void createComment(CommentRequest commentRequest, User loginUser);
 
     public Comment findCommentById(Long commentId);
 
