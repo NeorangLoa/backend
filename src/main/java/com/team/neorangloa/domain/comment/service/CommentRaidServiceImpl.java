@@ -8,6 +8,7 @@ import com.team.neorangloa.domain.comment.entity.CommentRaid;
 import com.team.neorangloa.domain.comment.repository.CommentRaidRepository;
 import com.team.neorangloa.domain.post.entity.PostRaid;
 import com.team.neorangloa.domain.post.service.PostRaidService;
+import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.error.ErrorCode;
 import com.team.neorangloa.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +27,9 @@ public class CommentRaidServiceImpl implements CommentRaidService{
 
     @Override
     @Transactional
-    public void createCommentRaid(CommentRaidRequest commentRaidRequest) {
+    public void createCommentRaid(CommentRaidRequest commentRaidRequest, User loginUser) {
         PostRaid postRaid = postRaidService.findPostRaidById(commentRaidRequest.getPostRaidId());
-        CommentRaid commentRaid = commentRaidMapper.toEntity(commentRaidRequest, postRaid);
+        CommentRaid commentRaid = commentRaidMapper.toEntity(commentRaidRequest, postRaid, loginUser);
         commentRaidRepository.save(commentRaid);
     }
 

@@ -8,6 +8,7 @@ import com.team.neorangloa.domain.comment.entity.Comment;
 import com.team.neorangloa.domain.comment.repository.CommentRepository;
 import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.service.PostService;
+import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.error.ErrorCode;
 import com.team.neorangloa.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +28,9 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
-    public void createComment(CommentRequest commentRequest) {
+    public void createComment(CommentRequest commentRequest, User loginUser) {
         Post post = postService.findPostById(commentRequest.getPostId());
-        Comment comment = commentMapper.toEntity(commentRequest, post);
+        Comment comment = commentMapper.toEntity(commentRequest, post, loginUser);
         commentRepository.save(comment);
     }
 

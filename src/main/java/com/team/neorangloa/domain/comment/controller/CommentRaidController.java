@@ -5,6 +5,9 @@ import com.team.neorangloa.domain.comment.dto.CommentRaidResponse;
 import com.team.neorangloa.domain.comment.dto.CommentRaidUpdateRequest;
 import com.team.neorangloa.domain.comment.entity.CommentRaid;
 import com.team.neorangloa.domain.comment.service.CommentRaidService;
+import com.team.neorangloa.domain.user.entity.User;
+import com.team.neorangloa.global.annotation.LoginRequired;
+import com.team.neorangloa.global.annotation.LoginUser;
 import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,8 +26,10 @@ public class CommentRaidController {
     private final CommentRaidService commentRaidService;
 
     @PostMapping
-    public ResponseEntity<ResultResponse> createCommentRaid(@RequestBody @Valid CommentRaidRequest request) {
-        commentRaidService.createCommentRaid(request);
+    @LoginRequired
+    public ResponseEntity<ResultResponse> createCommentRaid(@RequestBody @Valid CommentRaidRequest request,
+                                                            @LoginUser User loginUser) {
+        commentRaidService.createCommentRaid(request, loginUser);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.REGISTER_COMMENT_SUCCESS));
     }
 
@@ -36,6 +41,7 @@ public class CommentRaidController {
     }
 
     @PutMapping("/{commentRaidId}")
+    @LoginRequired
     public ResponseEntity<ResultResponse> updateCommentRaid(@PathVariable Long commentRaidId,
                                                             @RequestBody @Valid CommentRaidUpdateRequest request) {
         CommentRaid commentRaid = commentRaidService.findCommentRaidById(commentRaidId);
@@ -45,6 +51,7 @@ public class CommentRaidController {
     }
 
     @DeleteMapping("/{commentRaidId}")
+    @LoginRequired
     public ResponseEntity<ResultResponse> deleteCommentRaid(@PathVariable Long commentRaidId) {
         CommentRaid commentRaid = commentRaidService.findCommentRaidById(commentRaidId);
         commentRaidService.deleteCommentRaid(commentRaid);
