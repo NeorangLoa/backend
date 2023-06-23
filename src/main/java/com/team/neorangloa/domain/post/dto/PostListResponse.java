@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostListResponse {
     private final Long postId;
-
     private final String nickname;
     private final String title;
+    private final int viewCounts;
 
 }

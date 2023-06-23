@@ -6,11 +6,16 @@ import com.team.neorangloa.global.entity.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Getter
 @Table(name = "POST")
+@DynamicInsert
+@DynamicUpdate
 @NoArgsConstructor
 @Entity
 public class Post extends BaseTimeEntity {
@@ -30,16 +35,21 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name="USER_ID")
     private User author;
 
+    @ColumnDefault("0")
+    @Column(name = "view_counts",nullable = false)
+    private int viewCounts;
+
     private String post_image;
 
     @Column(name="IS_REMOVED", nullable = false)
     private boolean removed;
 
     @Builder
-    public Post(String title, String content, User author, String post_image, boolean removed){
+    public Post(String title, String content, User author, int viewCounts, String post_image, boolean removed){
         this.title = title;
         this.content= content;
         this.author = author;
+        this.viewCounts = viewCounts;
         this.post_image = post_image;
         this.removed = removed;
     }

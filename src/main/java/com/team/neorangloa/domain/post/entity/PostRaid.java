@@ -8,12 +8,17 @@ import com.team.neorangloa.global.entity.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Table(name = "POST_RAID")
+@DynamicInsert
+@DynamicUpdate
 @NoArgsConstructor
 @Entity
 public class PostRaid extends BaseTimeEntity {
@@ -28,6 +33,10 @@ public class PostRaid extends BaseTimeEntity {
     @Lob
     @Column(nullable = false)
     private String content;
+
+    @ColumnDefault("0")
+    @Column(name = "view_counts",nullable = false)
+    private int viewCounts;
 
     @Column(name = "IS_REMOVED")
     private boolean removed;
@@ -50,10 +59,11 @@ public class PostRaid extends BaseTimeEntity {
     private Raid raid;
 
     @Builder
-    public PostRaid(String title, String content, boolean removed, int maxAttacker, int maxSupporter,
-                    LocalDateTime finishedAt, User author, Raid raid) {
+    public PostRaid(String title, String content, int viewCounts, boolean removed, int maxAttacker, int maxSupporter,
+                    LocalDateTime finishedAt, User user, Raid raid) {
         this.title= title;
         this.content = content;
+        this.viewCounts = viewCounts;
         this.removed = removed;
         this.maxAttacker = maxAttacker;
         this.maxSupporter = maxSupporter;

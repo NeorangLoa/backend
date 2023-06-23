@@ -31,6 +31,7 @@ public class PostMapper {
                 .title(post.getTitle())
                 .content(post.getContent())
                 .image(post.getPost_image())
+                .viewCounts(post.getViewCounts())
                 .build();
     }
     public PostListResponse toDto(Post post){ // 목록 전체 조회 시 사용하는 DTO
@@ -38,6 +39,7 @@ public class PostMapper {
         return PostListResponse.builder()
                 .postId(post.getId())
                 .title(post.getTitle())
+                .viewCounts(post.getViewCounts())
                 .build();
     }
     public List<PostListResponse> toDtoList(List<Post> list) {

@@ -14,8 +14,8 @@ public class PostResponse {
 
     private final String nickname;
     private final String title;
-
     private final String content;
     private final String image;
+    private final int viewCounts;
 
 }
