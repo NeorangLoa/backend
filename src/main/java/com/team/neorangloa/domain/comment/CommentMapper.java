@@ -4,6 +4,7 @@ import com.team.neorangloa.domain.comment.dto.CommentRequest;
 import com.team.neorangloa.domain.comment.dto.CommentResponse;
 import com.team.neorangloa.domain.comment.entity.Comment;
 import com.team.neorangloa.domain.post.entity.Post;
+import com.team.neorangloa.domain.user.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,11 +12,12 @@ import java.util.stream.Collectors;
 
 @Component
 public class CommentMapper {
-    public Comment toEntity(CommentRequest commentRequest, Post post) {
+    public Comment toEntity(CommentRequest commentRequest, Post post, User loginUser) {
         return Comment.builder()
                 .content(commentRequest.getContent())
                 .removed(false)
                 .post(post)
+                .author(loginUser)
                 .build();
 
     }

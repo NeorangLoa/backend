@@ -5,6 +5,7 @@ import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRequest;
 import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.repository.PostRepository;
+import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.error.ErrorCode;
 import com.team.neorangloa.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void createNewPost(PostRequest postRequest) {
-        Post post = postMapper.toEntity(postRequest);
+    public void createNewPost(PostRequest postRequest, User loginUser) {
+        Post post = postMapper.toEntity(postRequest, loginUser);
         postRepository.save(post);
     }
     @Override

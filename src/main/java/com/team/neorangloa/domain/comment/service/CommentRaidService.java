@@ -4,11 +4,12 @@ import com.team.neorangloa.domain.comment.dto.CommentRaidRequest;
 import com.team.neorangloa.domain.comment.dto.CommentRaidResponse;
 import com.team.neorangloa.domain.comment.dto.CommentRaidUpdateRequest;
 import com.team.neorangloa.domain.comment.entity.CommentRaid;
+import com.team.neorangloa.domain.user.entity.User;
 
 import java.util.List;
 
 public interface CommentRaidService {
-    public void createCommentRaid(CommentRaidRequest commentRaidRequest);
+    public void createCommentRaid(CommentRaidRequest commentRaidRequest, User loginUser);
 
     public CommentRaid findCommentRaidById(Long commentRaidId);
 

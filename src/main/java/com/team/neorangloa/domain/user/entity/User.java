@@ -31,14 +31,22 @@ public class User extends BaseTimeEntity{
     private boolean removed;
 
     @Builder
-    public User(String email, String password, String nickname, boolean removed){
+    public User(String email, String password, String nickname, boolean removed) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
         this.removed = removed;
     }
 
-    public void encryptPassword(){
+    public void encryptPassword() {
         this.password = PasswordEncryptionUtil.encrypt(password);
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updatePassword(String password) {
+        this.password = password;
     }
 }

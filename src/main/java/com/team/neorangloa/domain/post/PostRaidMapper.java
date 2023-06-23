@@ -5,6 +5,7 @@ import com.team.neorangloa.domain.post.dto.PostRaidRequest;
 import com.team.neorangloa.domain.post.dto.PostRaidResponse;
 import com.team.neorangloa.domain.post.entity.PostRaid;
 import com.team.neorangloa.domain.raid.entity.Raid;
+import com.team.neorangloa.domain.user.entity.User;
 import lombok.Builder;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 public class PostRaidMapper {
 
-    public PostRaid toEntity(PostRaidRequest postRaidRequest) {
+    public PostRaid toEntity(PostRaidRequest postRaidRequest, User loginUser) {
         return PostRaid.builder()
                 .title(postRaidRequest.getTitle())
                 .content(postRaidRequest.getContent())
@@ -26,6 +27,7 @@ public class PostRaidMapper {
                         .itemLevel(postRaidRequest.getRaidItemLevel())
                         .build())
                 .removed(false)
+                .author(loginUser)
                 .build();
     }
 
