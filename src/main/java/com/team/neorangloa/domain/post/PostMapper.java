@@ -29,6 +29,7 @@ public class PostMapper {
         return PostResponse.builder()
                 .postId(post.getId())
                 .title(post.getTitle())
+                .nickname(post.getAuthor().getNickname())
                 .content(post.getContent())
                 .image(post.getPost_image())
                 .viewCounts(post.getViewCounts())
@@ -39,6 +40,7 @@ public class PostMapper {
         return PostListResponse.builder()
                 .postId(post.getId())
                 .title(post.getTitle())
+                .nickname(post.getAuthor().getNickname())
                 .viewCounts(post.getViewCounts())
                 .build();
     }

@@ -24,6 +24,7 @@ public class CommentRaidMapper {
     public CommentRaidResponse toDto(CommentRaid commentRaid) {
         return CommentRaidResponse.builder()
                 .commentRaidId(commentRaid.getId())
+                .nickname(commentRaid.getAuthor().getNickname())
                 .content(commentRaid.getContent())
                 .build();
     }

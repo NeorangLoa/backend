@@ -9,5 +9,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentRaidResponse {
     private final Long commentRaidId;
+    private final String nickname;
     private final String content;
 }

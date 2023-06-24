@@ -60,7 +60,7 @@ public class PostRaid extends BaseTimeEntity {
 
     @Builder
     public PostRaid(String title, String content, int viewCounts, boolean removed, int maxAttacker, int maxSupporter,
-                    LocalDateTime finishedAt, User user, Raid raid) {
+                    LocalDateTime finishedAt, User author, Raid raid) {
         this.title= title;
         this.content = content;
         this.viewCounts = viewCounts;

@@ -25,6 +25,7 @@ public class CommentMapper {
     public CommentResponse toDto(Comment comment) {
         return CommentResponse.builder()
                 .commentId(comment.getId())
+                .nickname(comment.getAuthor().getNickname())
                 .content(comment.getContent())
                 .build();
     }
