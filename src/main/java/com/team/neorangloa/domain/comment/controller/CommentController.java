@@ -35,7 +35,7 @@ public class CommentController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<ResultResponse> getComments(@PathVariable Long postId
-            ,@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size ) {
+            ,@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "20") Integer size ) {
         List<CommentResponse> comments = commentService.findCommentByPostId(page, size, postId);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_FIND_SUCCESS,comments));
     }

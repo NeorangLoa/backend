@@ -51,7 +51,7 @@ public class PostController {
 
     @GetMapping("/all/{page}")
     public ResponseEntity<ResultResponse> getPosts(@PathVariable Integer page
-            ,@RequestParam(defaultValue = "10") Integer size) {
+            ,@RequestParam(defaultValue = "20") Integer size) {
         List<PostListResponse> posts = postService.getPosts(page,size);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_PAGING_GET_SUCCESS, posts));
     }

@@ -35,7 +35,7 @@ public class CommentRaidController {
 
     @GetMapping("/{postRaidId}")
     public ResponseEntity<ResultResponse> getCommentRaids(@PathVariable Long postRaidId
-            ,@RequestParam Integer page, @RequestParam(defaultValue = "10") Integer size) {
+            ,@RequestParam Integer page, @RequestParam(defaultValue = "20") Integer size) {
         List<CommentRaidResponse> commentRaids = commentRaidService.findCommentRaidByPostRaidId(page, size, postRaidId);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_FIND_SUCCESS, commentRaids));
     }

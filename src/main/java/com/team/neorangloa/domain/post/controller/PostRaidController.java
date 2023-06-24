@@ -46,7 +46,7 @@ public class PostRaidController {
 
     @GetMapping("/all/{page}")
     public ResponseEntity<ResultResponse> getPostRaids(@PathVariable Integer page
-            ,@RequestParam(defaultValue = "10") Integer size ) {
+            ,@RequestParam(defaultValue = "20") Integer size ) {
         List<PostRaidListResponse> postRaids = postRaidService.getPosts(page,size);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_PAGING_GET_SUCCESS, postRaids));
     }
