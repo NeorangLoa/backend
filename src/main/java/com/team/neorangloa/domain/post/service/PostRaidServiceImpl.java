@@ -4,6 +4,7 @@ import com.team.neorangloa.domain.post.PostRaidMapper;
 import com.team.neorangloa.domain.post.dto.PostRaidListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidRequest;
 import com.team.neorangloa.domain.post.entity.PostRaid;
+import com.team.neorangloa.domain.post.exception.PostAuthorMismatchException;
 import com.team.neorangloa.domain.post.repository.PostRaidRepository;
 import com.team.neorangloa.domain.raid.entity.Raid;
 import com.team.neorangloa.domain.raid.repository.RaidRepository;
@@ -91,7 +92,8 @@ public class PostRaidServiceImpl implements PostRaidService{
 
     @Transactional
     @Override
-    public void updatePost(PostRaid postRaid, PostRaidRequest postRaidRequest) {
+    public void updatePost(User loginUser, PostRaid postRaid, PostRaidRequest postRaidRequest) {
+        checkIsAuthor(loginUser, postRaid);
         postRaid.updatePost(postRaidRequest);
         Raid raid = raidRepository.findRaidByName(postRaidRequest.getRaidName()).orElseThrow(
                 () -> new BusinessException(ErrorCode.RAID_NOT_FOUND_ERROR));
@@ -101,8 +103,17 @@ public class PostRaidServiceImpl implements PostRaidService{
 
     @Transactional
     @Override
-    public void deletePost(PostRaid postRaid) {
+    public void deletePost(User loginUser, PostRaid postRaid) {
+        checkIsAuthor(loginUser, postRaid);
         postRaid.setRemoved(true);
         postRaidRepository.save(postRaid);
+    }
+
+    @Transactional
+    @Override
+    public void checkIsAuthor(User loginUser, PostRaid postRaid){
+        if (!loginUser.getId().equals(postRaid.getAuthor().getId())) {
+            throw new PostAuthorMismatchException();
+        }
     }
 }

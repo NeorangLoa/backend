@@ -5,8 +5,10 @@ import com.team.neorangloa.domain.comment.dto.CommentRaidRequest;
 import com.team.neorangloa.domain.comment.dto.CommentRaidResponse;
 import com.team.neorangloa.domain.comment.dto.CommentRaidUpdateRequest;
 import com.team.neorangloa.domain.comment.entity.CommentRaid;
+import com.team.neorangloa.domain.comment.exception.CommentAuthorMismatchException;
 import com.team.neorangloa.domain.comment.repository.CommentRaidRepository;
 import com.team.neorangloa.domain.post.entity.PostRaid;
+import com.team.neorangloa.domain.post.exception.PostAuthorMismatchException;
 import com.team.neorangloa.domain.post.service.PostRaidService;
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.error.ErrorCode;
@@ -41,13 +43,15 @@ public class CommentRaidServiceImpl implements CommentRaidService{
 
     @Override
     @Transactional
-    public void updateCommentRaid(CommentRaid commentRaid, CommentRaidUpdateRequest request) {
+    public void updateCommentRaid(User loginUser, CommentRaid commentRaid, CommentRaidUpdateRequest request) {
+        checkIsAuthor(loginUser, commentRaid);
         commentRaid.updateCommentRaid(request);
     }
 
     @Override
     @Transactional
-    public void deleteCommentRaid(CommentRaid commentRaid) {
+    public void deleteCommentRaid(User loginUser, CommentRaid commentRaid) {
+        checkIsAuthor(loginUser, commentRaid);
         commentRaid.setRemoved(true);
         commentRaidRepository.save(commentRaid);
     }
@@ -58,5 +62,13 @@ public class CommentRaidServiceImpl implements CommentRaidService{
         PageRequest pageRequest = PageRequest.of(page, size);
         List<CommentRaid> commentRaids = commentRaidRepository.findCommentRaidByPostRaidId(pageRequest, postRaidId);
         return commentRaidMapper.toDtoList(commentRaids);
+    }
+
+    @Override
+    @Transactional
+    public void checkIsAuthor(User loginUser, CommentRaid commentRaid){
+        if (!loginUser.getId().equals(commentRaid.getAuthor().getId())) {
+            throw new CommentAuthorMismatchException();
+        }
     }
 }

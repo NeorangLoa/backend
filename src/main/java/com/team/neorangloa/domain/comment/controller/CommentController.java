@@ -43,18 +43,20 @@ public class CommentController {
     @PutMapping("/{commentId}")
     @LoginRequired
     public ResponseEntity<ResultResponse> updateComment(@PathVariable Long commentId,
-                                                        @RequestBody @Valid CommentUpdateRequest request) {
+                                                        @RequestBody @Valid CommentUpdateRequest request,
+                                                        @LoginUser User loginUser) {
         Comment comment = commentService.findCommentById(commentId);
-        commentService.updateComment(comment, request);
+        commentService.updateComment(loginUser, comment, request);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_UPDATE_SUCCESS));
     }
 
     @DeleteMapping("/{commentId}")
     @LoginRequired
-    public ResponseEntity<ResultResponse> deleteComment(@PathVariable Long commentId) {
+    public ResponseEntity<ResultResponse> deleteComment(@PathVariable Long commentId,
+                                                        @LoginUser User loginUser){
         Comment comment = commentService.findCommentById(commentId);
-        commentService.deleteComment(comment);
+        commentService.deleteComment(loginUser, comment);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_DELETE_SUCCESS));
     }

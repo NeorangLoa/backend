@@ -20,7 +20,9 @@ public interface PostService {
 
     public List<PostListResponse> getPosts(int page, int size);
 
-    public void updatePost(Post post,PostRequest postRequest);
+    public void updatePost(User user, Post post,PostRequest postRequest);
 
-    public void deletePost(Post post);
+    public void deletePost(User user, Post post);
+
+    public void checkIsAuthor(User user, Post post);
 }

@@ -43,18 +43,20 @@ public class CommentRaidController {
     @PutMapping("/{commentRaidId}")
     @LoginRequired
     public ResponseEntity<ResultResponse> updateCommentRaid(@PathVariable Long commentRaidId,
-                                                            @RequestBody @Valid CommentRaidUpdateRequest request) {
+                                                            @RequestBody @Valid CommentRaidUpdateRequest request,
+                                                            @LoginUser User loginUser) {
         CommentRaid commentRaid = commentRaidService.findCommentRaidById(commentRaidId);
-        commentRaidService.updateCommentRaid(commentRaid, request);
+        commentRaidService.updateCommentRaid(loginUser, commentRaid, request);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_UPDATE_SUCCESS));
     }
 
     @DeleteMapping("/{commentRaidId}")
     @LoginRequired
-    public ResponseEntity<ResultResponse> deleteCommentRaid(@PathVariable Long commentRaidId) {
+    public ResponseEntity<ResultResponse> deleteCommentRaid(@PathVariable Long commentRaidId,
+                                                            @LoginUser User loginUser) {
         CommentRaid commentRaid = commentRaidService.findCommentRaidById(commentRaidId);
-        commentRaidService.deleteCommentRaid(commentRaid);
+        commentRaidService.deleteCommentRaid(loginUser, commentRaid);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_DELETE_SUCCESS));
     }

@@ -54,18 +54,20 @@ public class PostRaidController {
     @PutMapping("/{postRaidId}")
     @LoginRequired
     public ResponseEntity<ResultResponse> updateRaidPost(@PathVariable Long postRaidId,
-                                                         @RequestBody @Valid PostRaidRequest postRaidRequest) {
+                                                         @RequestBody @Valid PostRaidRequest postRaidRequest,
+                                                         @LoginUser User loginUser) {
         PostRaid postRaid = postRaidService.findPostRaidById(postRaidId);
-        postRaidService.updatePost(postRaid, postRaidRequest);
+        postRaidService.updatePost(loginUser, postRaid, postRaidRequest);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_UPDATE_SUCCESS));
     }
 
     @DeleteMapping("/{postRaidId}")
     @LoginRequired
-    public ResponseEntity<ResultResponse> deleteRaidPost(@PathVariable Long postRaidId) {
+    public ResponseEntity<ResultResponse> deleteRaidPost(@PathVariable Long postRaidId,
+                                                         @LoginUser User loginUser) {
         PostRaid postRaid = postRaidService.findPostRaidById(postRaidId);
-        postRaidService.deletePost(postRaid);
+        postRaidService.deletePost(loginUser, postRaid);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_DELETE_SUCCESS));
     }
