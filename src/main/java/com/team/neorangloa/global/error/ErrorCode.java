@@ -21,9 +21,11 @@ public enum ErrorCode {
     POST_DUPLICATION_ERROR(409, "S001", "게시물의 이름이 중복됨"),
     POST_NOT_FOUND_ERROR(400, "S002", "게시물을 찾을 수 없음"),
     RAID_NOT_FOUND_ERROR(409, "S003", "레이드 정보를 찾을 수 없음"),
+    POST_MISMATCH_AUTHOR_EROOR(409,"S004","게시물 글쓴이와 일치하지 않음"),
 
     // Comment
-    COMMENT_NOT_FOUND_ERROR(400, "C001", "댓글을 찾을 수 없음");
+    COMMENT_NOT_FOUND_ERROR(400, "C001", "댓글을 찾을 수 없음"),
+    COMMENT_MISMATCH_AUTHOR_ERROR(409,"C002","댓글 글쓴이와 일치하지 않음");
 
     private final int status;
     private final String code;

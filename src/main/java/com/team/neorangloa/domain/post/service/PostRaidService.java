@@ -4,6 +4,7 @@ import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidRequest;
 import com.team.neorangloa.domain.post.dto.PostRequest;
+import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.entity.PostRaid;
 import com.team.neorangloa.domain.raid.entity.Raid;
 import com.team.neorangloa.domain.user.entity.User;
@@ -23,7 +24,9 @@ public interface PostRaidService {
 
     public List<PostRaidListResponse> getPosts(int page, int size);
 
-    public void updatePost(PostRaid postRaid, PostRaidRequest postRaidRequest);
+    public void updatePost(User user, PostRaid postRaid, PostRaidRequest postRaidRequest);
 
-    public void deletePost(PostRaid postRaid);
+    public void deletePost(User user, PostRaid postRaid);
+
+    public void checkIsAuthor(User user, PostRaid postRaid);
 }

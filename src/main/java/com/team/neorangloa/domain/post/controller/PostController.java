@@ -62,16 +62,17 @@ public class PostController {
                                                      @RequestBody @Valid PostRequest postRequest,
                                                      @LoginUser User loginUser) {
         Post post = postService.findPostById(postId);
-        postService.updatePost(post, postRequest);
+        postService.updatePost(loginUser,post, postRequest);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_UPDATE_SUCCESS));
     }
 
     @DeleteMapping("/{postId}")
     @LoginRequired
-    public ResponseEntity<ResultResponse> deletePost(@PathVariable Long postId) {
+    public ResponseEntity<ResultResponse> deletePost(@PathVariable Long postId,
+                                                     @LoginUser User loginUser) {
         Post post = postService.findPostById(postId);
-        postService.deletePost(post);
+        postService.deletePost(loginUser,post);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_DELETE_SUCCESS));
     }

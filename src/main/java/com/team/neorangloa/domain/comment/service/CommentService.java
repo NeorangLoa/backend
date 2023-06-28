@@ -13,7 +13,8 @@ public interface CommentService {
 
     public Comment findCommentById(Long commentId);
 
-    public void updateComment(Comment comment, CommentUpdateRequest request);
-    public void deleteComment(Comment comment);
+    public void updateComment(User user, Comment comment, CommentUpdateRequest request);
+    public void deleteComment(User user, Comment comment);
     public List<CommentResponse> findCommentByPostId(Integer page, Integer size, Long postId);
+    public void checkIsAuthor(User user, Comment comment);
 }

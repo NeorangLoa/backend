@@ -4,6 +4,7 @@ import com.team.neorangloa.domain.post.PostMapper;
 import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRequest;
 import com.team.neorangloa.domain.post.entity.Post;
+import com.team.neorangloa.domain.post.exception.PostAuthorMismatchException;
 import com.team.neorangloa.domain.post.repository.PostRepository;
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.error.ErrorCode;
@@ -31,6 +32,7 @@ public class PostServiceImpl implements PostService {
         Post post = postMapper.toEntity(postRequest, loginUser);
         postRepository.save(post);
     }
+
     @Override
     public Post findPostById(Long postId) {
         return postRepository.findPostById(postId).orElseThrow(
@@ -44,14 +46,14 @@ public class PostServiceImpl implements PostService {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("postView")) {
+                if (cookie.getName().equals("postView")) {
                     oldCookie = cookie;
                 }
             }
         }
 
         if (oldCookie != null) {
-            if(!oldCookie.getValue().contains("[" + postId.toString() + "]")){
+            if (!oldCookie.getValue().contains("[" + postId.toString() + "]")) {
                 increaseViewCounts(postId);
                 oldCookie.setValue(oldCookie.getValue() + "_[" + postId + "]");
                 oldCookie.setPath("/");
@@ -86,14 +88,24 @@ public class PostServiceImpl implements PostService {
 
     @Transactional
     @Override
-    public void updatePost(Post post, PostRequest postRequest) {
+    public void updatePost(User loginUser, Post post, PostRequest postRequest) {
+        checkIsAuthor(loginUser,post);
         post.updatePost(postRequest);
     }
 
     @Transactional
     @Override
-    public void deletePost(Post post) {
+    public void deletePost(User loginUser, Post post) {
+        checkIsAuthor(loginUser,post);
         post.setRemoved(true);
         postRepository.save(post);
+    }
+
+    @Transactional
+    @Override
+    public void checkIsAuthor(User loginUser, Post post) {
+        if (!loginUser.getId().equals(post.getAuthor().getId())) {
+            throw new PostAuthorMismatchException();
+        }
     }
 }
