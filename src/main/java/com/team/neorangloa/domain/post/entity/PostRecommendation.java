@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class PostRecommendation extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RECOMMENDATION_ID")
+    @Column(name = "RAID_RECOMMENDATION_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

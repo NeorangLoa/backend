@@ -43,11 +43,6 @@ public class PostServiceImpl implements PostService {
     }
 
 
-//    @Override
-//    public PostRecommendation findByClientAndPost(User user, Post post) {
-//        return postRecommendationRepository.findByClientAndPost(user, post).orElseThrow(
-//                () -> new BusinessException(ErrorCode.COMMENT_MISMATCH_AUTHOR_ERROR));
-//    }
 
     // 조회수 중복 방지 함수
     @Override
@@ -126,7 +121,6 @@ public class PostServiceImpl implements PostService {
         Optional<PostRecommendation> postRecommendation = postRecommendationRepository.findByClientAndPost(loginUser, post);
 
         if (postRecommendation.isEmpty()){
-            System.out.println("True로 설정");
             PostRecommendation newPostRecommendation = PostRecommendation.builder()
                     .post(post)
                     .user(loginUser)
@@ -135,7 +129,6 @@ public class PostServiceImpl implements PostService {
             postRecommendationRepository.save(newPostRecommendation);
             post.increaseRecommendationCount();
         } else {
-            System.out.println("False로 설정");
             postRecommendationRepository.deleteByUserAndPost(loginUser, post);
             postRecommendation.get().setRecommended(false);
             post.decreaseRecommendationCount();

@@ -3,6 +3,7 @@ package com.team.neorangloa.domain.post.controller;
 import com.team.neorangloa.domain.post.PostRaidMapper;
 import com.team.neorangloa.domain.post.dto.PostRaidListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidRequest;
+import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.entity.PostRaid;
 import com.team.neorangloa.domain.post.service.PostRaidService;
 import com.team.neorangloa.domain.user.entity.User;
@@ -70,5 +71,15 @@ public class PostRaidController {
         postRaidService.deletePost(loginUser, postRaid);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_DELETE_SUCCESS));
+    }
+
+    @GetMapping("/recommend/{postRaidId}")
+    @LoginRequired
+    public ResponseEntity<ResultResponse> recommendRaidPost(@PathVariable Long postRaidId,
+                                                        @LoginUser User loginUser){
+        PostRaid postRaid = postRaidService.findPostRaidById(postRaidId);
+        postRaidService.updateRaidPostRecommendation(loginUser, postRaid);
+
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_RECOMMENDATION_UPDATE_SUCCESS));
     }
 }
