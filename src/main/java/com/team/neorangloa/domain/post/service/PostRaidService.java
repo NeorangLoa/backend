@@ -26,5 +26,5 @@ public interface PostRaidService {
 
     public void checkIsAuthor(User user, PostRaid postRaid);
 
-    public void updateRaidPostRecommendation(User user, PostRaid postRaid);
+    public int updateRaidPostRecommendation(User user, PostRaid postRaid);
 }

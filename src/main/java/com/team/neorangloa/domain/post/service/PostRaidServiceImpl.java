@@ -123,7 +123,7 @@ public class PostRaidServiceImpl implements PostRaidService{
 
     @Transactional
     @Override
-    public void updateRaidPostRecommendation(User loginUser, PostRaid postRaid) {
+    public int updateRaidPostRecommendation(User loginUser, PostRaid postRaid) {
 
         Optional<PostRaidRecommendation> postRaidRecommendation = postRaidRecommendationRepository.findByUserAndPostRaid(loginUser, postRaid);
 
@@ -140,5 +140,6 @@ public class PostRaidServiceImpl implements PostRaidService{
             postRaidRecommendation.get().setRecommended(false);
             postRaid.decreaseRecommendationCount();
         }
+        return postRaid.getRecommendationCount();
     }
 }

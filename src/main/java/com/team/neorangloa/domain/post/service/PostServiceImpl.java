@@ -116,7 +116,7 @@ public class PostServiceImpl implements PostService {
 
     @Transactional
     @Override
-    public void updatePostRecommendation(User loginUser, Post post) {
+    public int updatePostRecommendation(User loginUser, Post post) {
 
         Optional<PostRecommendation> postRecommendation = postRecommendationRepository.findByClientAndPost(loginUser, post);
 
@@ -133,5 +133,7 @@ public class PostServiceImpl implements PostService {
             postRecommendation.get().setRecommended(false);
             post.decreaseRecommendationCount();
         }
+
+        return post.getRecommendationCount();
     }
 }

@@ -28,5 +28,5 @@ public interface PostService {
 
     public void checkIsAuthor(User user, Post post);
 
-    public void updatePostRecommendation(User user, Post post);
+    public int updatePostRecommendation(User user, Post post);
 }

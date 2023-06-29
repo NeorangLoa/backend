@@ -78,8 +78,8 @@ public class PostRaidController {
     public ResponseEntity<ResultResponse> recommendRaidPost(@PathVariable Long postRaidId,
                                                         @LoginUser User loginUser){
         PostRaid postRaid = postRaidService.findPostRaidById(postRaidId);
-        postRaidService.updateRaidPostRecommendation(loginUser, postRaid);
+        int postLike = postRaidService.updateRaidPostRecommendation(loginUser, postRaid);
 
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_RECOMMENDATION_UPDATE_SUCCESS));
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_RECOMMENDATION_UPDATE_SUCCESS, postLike));
     }
 }

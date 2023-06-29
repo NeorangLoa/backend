@@ -81,8 +81,8 @@ public class PostController {
     public ResponseEntity<ResultResponse> recommendPost(@PathVariable Long postId,
                                                         @LoginUser User loginUser){
         Post post = postService.findPostById(postId);
-        postService.updatePostRecommendation(loginUser, post);
+        int postLike = postService.updatePostRecommendation(loginUser, post);
 
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_RECOMMENDATION_UPDATE_SUCCESS));
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_RECOMMENDATION_UPDATE_SUCCESS,postLike));
     }
 }
