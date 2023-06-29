@@ -44,6 +44,9 @@ public class Post extends BaseTimeEntity {
     @Column(name="IS_REMOVED", nullable = false)
     private boolean removed;
 
+    @Column(name = "RECOMMENDATION_COUNT", nullable = false)
+    private int recommendationCount;
+
     @Builder
     public Post(String title, String content, User author, int viewCounts, String post_image, boolean removed){
         this.title = title;
@@ -64,4 +67,10 @@ public class Post extends BaseTimeEntity {
         this.removed = removed;
     }
 
+    public void increaseRecommendationCount(){
+        this.recommendationCount += 1;
+    }
+    public void decreaseRecommendationCount(){
+        this.recommendationCount -= 1;
+    }
 }

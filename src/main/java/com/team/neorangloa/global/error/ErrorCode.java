@@ -23,6 +23,7 @@ public enum ErrorCode {
     RAID_NOT_FOUND_ERROR(409, "S003", "레이드 정보를 찾을 수 없음"),
     POST_MISMATCH_AUTHOR_EROOR(409,"S004","게시물 글쓴이와 일치하지 않음"),
 
+
     // Comment
     COMMENT_NOT_FOUND_ERROR(400, "C001", "댓글을 찾을 수 없음"),
     COMMENT_MISMATCH_AUTHOR_ERROR(409,"C002","댓글 글쓴이와 일치하지 않음");

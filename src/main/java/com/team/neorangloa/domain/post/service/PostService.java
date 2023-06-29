@@ -3,6 +3,7 @@ package com.team.neorangloa.domain.post.service;
 import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRequest;
 import com.team.neorangloa.domain.post.entity.Post;
+import com.team.neorangloa.domain.post.entity.PostRecommendation;
 import com.team.neorangloa.domain.user.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ public interface PostService {
     public void createNewPost(PostRequest postRequest, User loginUser);
 
     public Post findPostById(Long postId);
+
+//    public PostRecommendation findByClientAndPost(User user, Post post);
 
     public void updateViewCounts(Long postId, HttpServletRequest request, HttpServletResponse response);
 
@@ -25,4 +28,6 @@ public interface PostService {
     public void deletePost(User user, Post post);
 
     public void checkIsAuthor(User user, Post post);
+
+    public void updatePostRecommendation(User user, Post post);
 }

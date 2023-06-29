@@ -4,7 +4,9 @@ import com.team.neorangloa.domain.post.PostMapper;
 import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRequest;
 import com.team.neorangloa.domain.post.entity.Post;
+import com.team.neorangloa.domain.post.entity.PostRecommendation;
 import com.team.neorangloa.domain.post.exception.PostAuthorMismatchException;
+import com.team.neorangloa.domain.post.repository.PostRecommendationRepository;
 import com.team.neorangloa.domain.post.repository.PostRepository;
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.error.ErrorCode;
@@ -18,12 +20,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-
+    private final PostRecommendationRepository postRecommendationRepository;
     private final PostMapper postMapper;
 
     @Override
@@ -38,6 +41,13 @@ public class PostServiceImpl implements PostService {
         return postRepository.findPostById(postId).orElseThrow(
                 () -> new BusinessException(ErrorCode.POST_NOT_FOUND_ERROR));
     }
+
+
+//    @Override
+//    public PostRecommendation findByClientAndPost(User user, Post post) {
+//        return postRecommendationRepository.findByClientAndPost(user, post).orElseThrow(
+//                () -> new BusinessException(ErrorCode.COMMENT_MISMATCH_AUTHOR_ERROR));
+//    }
 
     // 조회수 중복 방지 함수
     @Override
@@ -106,6 +116,29 @@ public class PostServiceImpl implements PostService {
     public void checkIsAuthor(User loginUser, Post post) {
         if (!loginUser.getId().equals(post.getAuthor().getId())) {
             throw new PostAuthorMismatchException();
+        }
+    }
+
+    @Transactional
+    @Override
+    public void updatePostRecommendation(User loginUser, Post post) {
+
+        Optional<PostRecommendation> postRecommendation = postRecommendationRepository.findByClientAndPost(loginUser, post);
+
+        if (postRecommendation.isEmpty()){
+            System.out.println("True로 설정");
+            PostRecommendation newPostRecommendation = PostRecommendation.builder()
+                    .post(post)
+                    .user(loginUser)
+                    .isRecommended(true)
+                    .build();
+            postRecommendationRepository.save(newPostRecommendation);
+            post.increaseRecommendationCount();
+        } else {
+            System.out.println("False로 설정");
+            postRecommendationRepository.deleteByUserAndPost(loginUser, post);
+            postRecommendation.get().setRecommended(false);
+            post.decreaseRecommendationCount();
         }
     }
 }
