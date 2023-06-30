@@ -89,10 +89,4 @@ public class PostRaid extends BaseTimeEntity {
 
     public void setRaid(Raid raid) { this.raid = raid; }
 
-    public void increaseRecommendationCount(){
-        this.recommendationCount += 1;
-    }
-    public void decreaseRecommendationCount(){
-        this.recommendationCount -= 1;
-    }
 }

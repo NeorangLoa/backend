@@ -127,11 +127,11 @@ public class PostServiceImpl implements PostService {
                     .isRecommended(true)
                     .build();
             postRecommendationRepository.save(newPostRecommendation);
-            post.increaseRecommendationCount();
+            postRepository.increaseRecommendationCount(post.getId());
         } else {
             postRecommendationRepository.deleteByUserAndPost(loginUser, post);
             postRecommendation.get().setRecommended(false);
-            post.decreaseRecommendationCount();
+            postRepository.decreaseRecommendationCount(post.getId());
         }
 
         return post.getRecommendationCount();

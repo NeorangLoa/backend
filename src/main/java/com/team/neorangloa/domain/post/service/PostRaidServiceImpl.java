@@ -134,11 +134,11 @@ public class PostRaidServiceImpl implements PostRaidService{
                     .isRecommended(true)
                     .build();
             postRaidRecommendationRepository.save(newPostRaidRecommendation);
-            postRaid.increaseRecommendationCount();
+            postRaidRepository.increaseRecommendationCount(postRaid.getId());
         } else {
             postRaidRecommendationRepository.deleteByUserAndPostRaid(loginUser, postRaid);
             postRaidRecommendation.get().setRecommended(false);
-            postRaid.decreaseRecommendationCount();
+            postRaidRepository.decreaseRecommendationCount(postRaid.getId());
         }
         return postRaid.getRecommendationCount();
     }

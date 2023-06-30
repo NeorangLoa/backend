@@ -67,10 +67,4 @@ public class Post extends BaseTimeEntity {
         this.removed = removed;
     }
 
-    public void increaseRecommendationCount(){
-        this.recommendationCount += 1;
-    }
-    public void decreaseRecommendationCount(){
-        this.recommendationCount -= 1;
-    }
 }
