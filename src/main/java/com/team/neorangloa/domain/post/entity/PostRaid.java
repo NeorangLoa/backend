@@ -58,6 +58,9 @@ public class PostRaid extends BaseTimeEntity {
     @JoinColumn(name = "RAID_ID")
     private Raid raid;
 
+    @Column(name = "RECOMMENDATION_COUNT", nullable = false)
+    private int recommendationCount;
+
     @Builder
     public PostRaid(String title, String content, int viewCounts, boolean removed, int maxAttacker, int maxSupporter,
                     LocalDateTime finishedAt, User author, Raid raid) {
@@ -85,4 +88,5 @@ public class PostRaid extends BaseTimeEntity {
     }
 
     public void setRaid(Raid raid) { this.raid = raid; }
+
 }

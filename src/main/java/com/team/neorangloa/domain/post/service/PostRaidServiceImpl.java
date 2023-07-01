@@ -4,7 +4,9 @@ import com.team.neorangloa.domain.post.PostRaidMapper;
 import com.team.neorangloa.domain.post.dto.PostRaidListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidRequest;
 import com.team.neorangloa.domain.post.entity.PostRaid;
+import com.team.neorangloa.domain.post.entity.PostRaidRecommendation;
 import com.team.neorangloa.domain.post.exception.PostAuthorMismatchException;
+import com.team.neorangloa.domain.post.repository.PostRaidRecommendationRepository;
 import com.team.neorangloa.domain.post.repository.PostRaidRepository;
 import com.team.neorangloa.domain.raid.entity.Raid;
 import com.team.neorangloa.domain.raid.repository.RaidRepository;
@@ -20,6 +22,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,7 @@ public class PostRaidServiceImpl implements PostRaidService{
     private final PostRaidRepository postRaidRepository;
     private final RaidRepository raidRepository;
     private final PostRaidMapper postRaidMapper;
+    private final PostRaidRecommendationRepository postRaidRecommendationRepository;
 
     @Transactional
     @Override
@@ -115,5 +119,27 @@ public class PostRaidServiceImpl implements PostRaidService{
         if (!loginUser.getId().equals(postRaid.getAuthor().getId())) {
             throw new PostAuthorMismatchException();
         }
+    }
+
+    @Transactional
+    @Override
+    public int updateRaidPostRecommendation(User loginUser, PostRaid postRaid) {
+
+        Optional<PostRaidRecommendation> postRaidRecommendation = postRaidRecommendationRepository.findByUserAndPostRaid(loginUser, postRaid);
+
+        if (postRaidRecommendation.isEmpty()){
+            PostRaidRecommendation newPostRaidRecommendation = PostRaidRecommendation.builder()
+                    .postRaid(postRaid)
+                    .user(loginUser)
+                    .isRecommended(true)
+                    .build();
+            postRaidRecommendationRepository.save(newPostRaidRecommendation);
+            postRaidRepository.increaseRecommendationCount(postRaid.getId());
+        } else {
+            postRaidRecommendationRepository.deleteByUserAndPostRaid(loginUser, postRaid);
+            postRaidRecommendation.get().setRecommended(false);
+            postRaidRepository.decreaseRecommendationCount(postRaid.getId());
+        }
+        return postRaid.getRecommendationCount();
     }
 }

@@ -1,12 +1,8 @@
 package com.team.neorangloa.domain.post.service;
 
-import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidRequest;
-import com.team.neorangloa.domain.post.dto.PostRequest;
-import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.entity.PostRaid;
-import com.team.neorangloa.domain.raid.entity.Raid;
 import com.team.neorangloa.domain.user.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,4 +25,6 @@ public interface PostRaidService {
     public void deletePost(User user, PostRaid postRaid);
 
     public void checkIsAuthor(User user, PostRaid postRaid);
+
+    public int updateRaidPostRecommendation(User user, PostRaid postRaid);
 }

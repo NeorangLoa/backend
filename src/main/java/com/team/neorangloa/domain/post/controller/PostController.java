@@ -72,8 +72,17 @@ public class PostController {
     public ResponseEntity<ResultResponse> deletePost(@PathVariable Long postId,
                                                      @LoginUser User loginUser) {
         Post post = postService.findPostById(postId);
-        postService.deletePost(loginUser,post);
+        postService.deletePost(loginUser, post);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_DELETE_SUCCESS));
+    }
+    @GetMapping("/recommend/{postId}")
+    @LoginRequired
+    public ResponseEntity<ResultResponse> recommendPost(@PathVariable Long postId,
+                                                        @LoginUser User loginUser){
+        Post post = postService.findPostById(postId);
+        int postLike = postService.updatePostRecommendation(loginUser, post);
+
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_RECOMMENDATION_UPDATE_SUCCESS,postLike));
     }
 }

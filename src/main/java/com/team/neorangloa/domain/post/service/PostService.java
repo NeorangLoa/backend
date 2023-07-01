@@ -14,6 +14,8 @@ public interface PostService {
 
     public Post findPostById(Long postId);
 
+//    public PostRecommendation findByClientAndPost(User user, Post post);
+
     public void updateViewCounts(Long postId, HttpServletRequest request, HttpServletResponse response);
 
     public void increaseViewCounts(Long postId);
@@ -25,4 +27,6 @@ public interface PostService {
     public void deletePost(User user, Post post);
 
     public void checkIsAuthor(User user, Post post);
+
+    public int updatePostRecommendation(User user, Post post);
 }

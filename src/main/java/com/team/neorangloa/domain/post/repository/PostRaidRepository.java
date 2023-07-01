@@ -21,4 +21,12 @@ public interface PostRaidRepository extends JpaRepository<PostRaid, Long> {
     @Modifying
     @Query("UPDATE PostRaid pr SET pr.viewCounts = pr.viewCounts + 1 WHERE pr.id = :postRaidId")
     void updateViewCounts(Long postRaidId);
+    @Transactional
+    @Modifying
+    @Query("UPDATE PostRaid pr SET pr.recommendationCount = pr.recommendationCount + 1 WHERE pr.id = :postRaidId")
+    void increaseRecommendationCount(Long postRaidId);
+    @Transactional
+    @Modifying
+    @Query("UPDATE PostRaid pr SET pr.recommendationCount = pr.recommendationCount - 1 WHERE pr.id = :postRaidId")
+    void decreaseRecommendationCount(Long postRaidId);
 }
