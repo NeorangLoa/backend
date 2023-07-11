@@ -21,7 +21,7 @@ public interface PostService {
     public void increaseViewCounts(Long postId);
 
     public List<PostListResponse> getPosts(int page, int size);
-
+    public List<PostListResponse> getHotPosts();
     public void updatePost(User user, Post post,PostRequest postRequest);
 
     public void deletePost(User user, Post post);

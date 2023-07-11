@@ -93,6 +93,13 @@ public class PostServiceImpl implements PostService {
 
     @Transactional
     @Override
+    public List<PostListResponse> getHotPosts() {
+        List<Post> hotPosts = postRepository.findTop5ByOrderByRecommendationCountDesc();
+        return postMapper.toDtoList(hotPosts);
+    }
+
+    @Transactional
+    @Override
     public void updatePost(User loginUser, Post post, PostRequest postRequest) {
         checkIsAuthor(loginUser,post);
         post.updatePost(postRequest);
