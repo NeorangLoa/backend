@@ -19,6 +19,7 @@ public interface PostRaidService {
     public void increaseViewCounts(Long postRaidId);
 
     public List<PostRaidListResponse> getPosts(int page, int size);
+    public List<PostRaidListResponse> getHotPosts();
 
     public void updatePost(User user, PostRaid postRaid, PostRaidRequest postRaidRequest);
 

@@ -96,6 +96,13 @@ public class PostRaidServiceImpl implements PostRaidService{
 
     @Transactional
     @Override
+    public List<PostRaidListResponse> getHotPosts() {
+        List<PostRaid> hotPostRaids = postRaidRepository.findTop5ByOrderByRecommendationCountDesc();
+        return postRaidMapper.toDtoList(hotPostRaids);
+    }
+
+    @Transactional
+    @Override
     public void updatePost(User loginUser, PostRaid postRaid, PostRaidRequest postRaidRequest) {
         checkIsAuthor(loginUser, postRaid);
         postRaid.updatePost(postRaidRequest);
