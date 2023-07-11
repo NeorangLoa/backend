@@ -33,6 +33,7 @@ public class PostMapper {
                 .content(post.getContent())
                 .image(post.getPost_image())
                 .viewCounts(post.getViewCounts())
+                .recommendationCount(post.getRecommendationCount())
                 .createdAt(post.getCreatedTime())
                 .build();
     }
@@ -43,6 +44,7 @@ public class PostMapper {
                 .title(post.getTitle())
                 .nickname(post.getAuthor().getNickname())
                 .viewCounts(post.getViewCounts())
+                .recommendationCount(post.getRecommendationCount())
                 .createdAt(post.getCreatedTime())
                 .build();
     }
