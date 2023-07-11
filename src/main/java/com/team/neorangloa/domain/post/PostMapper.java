@@ -33,6 +33,7 @@ public class PostMapper {
                 .content(post.getContent())
                 .image(post.getPost_image())
                 .viewCounts(post.getViewCounts())
+                .createdAt(post.getCreatedTime())
                 .build();
     }
     public PostListResponse toDto(Post post){ // 목록 전체 조회 시 사용하는 DTO
@@ -42,6 +43,7 @@ public class PostMapper {
                 .title(post.getTitle())
                 .nickname(post.getAuthor().getNickname())
                 .viewCounts(post.getViewCounts())
+                .createdAt(post.getCreatedTime())
                 .build();
     }
     public List<PostListResponse> toDtoList(List<Post> list) {

@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Builder
@@ -17,5 +19,6 @@ public class PostResponse {
     private final String content;
     private final String image;
     private final int viewCounts;
+    private final LocalDateTime createdAt;
 
 }

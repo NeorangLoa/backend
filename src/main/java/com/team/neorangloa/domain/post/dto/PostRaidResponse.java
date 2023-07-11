@@ -20,4 +20,5 @@ public class PostRaidResponse {
     private final LocalDateTime finishedAt;
     private final String raidName;
     private final String raidItemLevel;
+    private final LocalDateTime createdAt;
 }

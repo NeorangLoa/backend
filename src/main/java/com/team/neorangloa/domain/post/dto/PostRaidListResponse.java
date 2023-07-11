@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Builder
@@ -17,4 +19,5 @@ public class PostRaidListResponse {
     private final int maxSupporter;
     private final String raidName;
     private final String raidItemLevel;
+    private final LocalDateTime createdAt;
 }

@@ -44,6 +44,7 @@ public class PostRaidMapper {
                 .finishedAt(postRaid.getFinishedAt())
                 .raidName(postRaid.getRaid().getName())
                 .raidItemLevel(postRaid.getRaid().getItemLevel())
+                .createdAt(postRaid.getCreatedTime())
                 .build();
     }
 
@@ -57,6 +58,7 @@ public class PostRaidMapper {
                 .maxSupporter(postRaid.getMaxSupporter())
                 .raidName(postRaid.getRaid().getName())
                 .raidItemLevel(postRaid.getRaid().getItemLevel())
+                .createdAt(postRaid.getCreatedTime())
                 .build();
     }
 
