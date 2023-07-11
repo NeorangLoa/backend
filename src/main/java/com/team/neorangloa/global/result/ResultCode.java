@@ -24,6 +24,7 @@ public enum ResultCode {
     POST_UPDATE_SUCCESS("S005", "게시물 수정 성공"),
     POST_DELETE_SUCCESS("S006", "게시물 삭제 성공"),
     POST_RECOMMENDATION_UPDATE_SUCCESS("S007","게시물 추천수 수정 성공"),
+    POST_HOT_GET_SUCCESS("S008", "인기 게시물 조회 성공"),
 
     // comment
     REGISTER_COMMENT_SUCCESS("C001", "댓글 등록 성공"),
