@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PostRaidRepository extends JpaRepository<PostRaid, Long> {
@@ -16,6 +17,8 @@ public interface PostRaidRepository extends JpaRepository<PostRaid, Long> {
 
     @Query("SELECT pr FROM PostRaid pr WHERE pr.removed = false ORDER BY pr.id DESC")
     Page<PostRaid> findAllPostRaidByCreatedAtDesc(Pageable pageable);
+
+    List<PostRaid> findTop5ByOrderByRecommendationCountDesc();
 
     @Transactional
     @Modifying

@@ -15,6 +15,7 @@ public class PostRaidResponse {
     private final String title;
     private final String content;
     private final int viewCounts;
+    private final int recommendationCount;
     private final int maxAttacker;
     private final int maxSupporter;
     private final LocalDateTime finishedAt;

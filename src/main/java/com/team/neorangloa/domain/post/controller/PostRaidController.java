@@ -1,6 +1,7 @@
 package com.team.neorangloa.domain.post.controller;
 
 import com.team.neorangloa.domain.post.PostRaidMapper;
+import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidListResponse;
 import com.team.neorangloa.domain.post.dto.PostRaidRequest;
 import com.team.neorangloa.domain.post.entity.Post;
@@ -50,6 +51,12 @@ public class PostRaidController {
             ,@RequestParam(defaultValue = "20") Integer size ) {
         List<PostRaidListResponse> postRaids = postRaidService.getPosts(page,size);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_PAGING_GET_SUCCESS, postRaids));
+    }
+
+    @GetMapping("/hot")
+    public ResponseEntity<ResultResponse> getHotPosts() {
+        List<PostRaidListResponse> hotPostRaids = postRaidService.getHotPosts();
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_HOT_GET_SUCCESS, hotPostRaids));
     }
 
     @PutMapping("/{postRaidId}")

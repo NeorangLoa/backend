@@ -56,6 +56,12 @@ public class PostController {
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_PAGING_GET_SUCCESS, posts));
     }
 
+    @GetMapping("/hot")
+    public ResponseEntity<ResultResponse> getHotPosts() {
+        List<PostListResponse> hotPosts = postService.getHotPosts();
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_HOT_GET_SUCCESS, hotPosts));
+    }
+
     @PutMapping("/{postId}")
     @LoginRequired
     public ResponseEntity<ResultResponse> updatePost(@PathVariable Long postId,

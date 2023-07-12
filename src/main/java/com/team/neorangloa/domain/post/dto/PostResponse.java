@@ -19,6 +19,7 @@ public class PostResponse {
     private final String content;
     private final String image;
     private final int viewCounts;
+    private final int recommendationCount;
     private final LocalDateTime createdAt;
 
 }
