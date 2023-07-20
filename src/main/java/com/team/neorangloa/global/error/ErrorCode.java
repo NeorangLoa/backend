@@ -31,7 +31,11 @@ public enum ErrorCode {
     // image
     INVALID_FILE_TYPE(400, "I001", "알맞지 않은 파일 확장자입니다."),
 
-    FILE_NOT_UPLOAD(400, "I002", "파일을 업로드하지 않았습니다.");
+    FILE_NOT_UPLOAD(400, "I002", "파일을 업로드하지 않았습니다."),
+
+    FILE_SIZE_LIMIT_ERROR(400, "I003", "파일 용량이 초과되었습니다.");
+
+
 
     private final int status;
     private final String code;
