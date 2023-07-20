@@ -2,6 +2,7 @@ package com.team.neorangloa.domain.image.service;
 
 import com.team.neorangloa.domain.image.entity.PostImage;
 import com.team.neorangloa.domain.image.repository.ImageJdbcRepository;
+import com.team.neorangloa.domain.image.repository.PostImageRepository;
 import com.team.neorangloa.domain.image.util.FileUtils;
 import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.service.PostService;
@@ -20,6 +21,7 @@ public class ImageFileUploadService {
     private final AwsS3Service awsS3Service;
     private final PostService postService;
     private final ImageJdbcRepository imageJdbcRepository;
+    private final PostImageRepository postImageRepository;
 
     @Transactional
     public void upload(Long postId, List<MultipartFile> files) throws IOException {
@@ -46,5 +48,18 @@ public class ImageFileUploadService {
         }
 
         return postImages;
+    }
+
+    public List<PostImage> findImageListByPost(Post post) {
+        return postImageRepository.findAllByPost(post);
+    }
+
+    public List<String> getImagesByPost(Post post) {
+        List<PostImage> postImages = findImageListByPost(post);
+        List<String> imagesUrls = new ArrayList<>();
+        for (PostImage postImage : postImages) {
+            imagesUrls.add(postImage.getUrl());
+        }
+        return imagesUrls;
     }
 }
