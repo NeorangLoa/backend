@@ -41,17 +41,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
-    //    @Override
-//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        converters.add(mappingJackson2HttpMessageConverter());
-//    }
-//
-//    @Bean
-//    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-//        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-//        // JSON 형식으로 변환하기 위해 설정
-//        // 필요에 따라 ObjectMapper의 설정을 추가로 수정할 수 있습니다.
-//        // 예시: converter.getObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
-//        return converter;
-//    }
 }

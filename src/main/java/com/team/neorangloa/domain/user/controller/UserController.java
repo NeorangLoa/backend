@@ -26,6 +26,7 @@ import java.net.URISyntaxException;
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserService userService;
+    private final RestTemplate restTemplate;
 
     @PostMapping
     public ResponseEntity<ResultResponse> signup(
@@ -60,10 +61,11 @@ public class UserController {
         userService.updatePassword(logInUserId, updatePasswordRequest);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.UPDATE_USER_PASSWORD_SUCCESS));
     }
+
+
     @GetMapping("/charactersInfo/{characterName}")
     public ResponseEntity<String> getCharactersInfo(@RequestHeader("API-Key") String apiKey,
                                                     @PathVariable String characterName) {
-        RestTemplate restTemplate = new RestTemplate();
         String apiUrl = "https://developer-lostark.game.onstove.com/characters/" + characterName + "/siblings";
 
         HttpHeaders headers = new HttpHeaders();
@@ -71,14 +73,8 @@ public class UserController {
         headers.set(HttpHeaders.AUTHORIZATION, apiKey);
 
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
-
         ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.GET, httpEntity, String.class);
-        System.out.println(response);
-        System.out.println(response.getStatusCode());
-        System.out.println(response.getBody());
 
-        // 클라이언트에 반환할 때는 JSON 형식으로 변환하여 반환
-        // response.getBody()는 API에서 받은 데이터를 문자열로 반환
         return ResponseEntity.ok(response.getBody());
     }
 }
