@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Getter
@@ -17,7 +18,7 @@ public class PostResponse {
     private final String nickname;
     private final String title;
     private final String content;
-    private final String image;
+    private final List<String> imageUrls;
     private final int viewCounts;
     private final int recommendationCount;
     private final LocalDateTime createdAt;
