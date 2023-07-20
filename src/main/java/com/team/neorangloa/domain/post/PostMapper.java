@@ -18,7 +18,6 @@ public class PostMapper {
         return Post.builder()
                 .title(postRequest.getTitle())
                 .content(postRequest.getContent())
-                .post_image(postRequest.getImage())
                 .removed(false)
                 .author(loginUser)
                 .build();
@@ -31,7 +30,6 @@ public class PostMapper {
                 .title(post.getTitle())
                 .nickname(post.getAuthor().getNickname())
                 .content(post.getContent())
-                .image(post.getPost_image())
                 .viewCounts(post.getViewCounts())
                 .recommendationCount(post.getRecommendationCount())
                 .createdAt(post.getCreatedTime())
