@@ -26,7 +26,10 @@ public enum ErrorCode {
 
     // Comment
     COMMENT_NOT_FOUND_ERROR(400, "C001", "댓글을 찾을 수 없음"),
-    COMMENT_MISMATCH_AUTHOR_ERROR(409,"C002","댓글 글쓴이와 일치하지 않음");
+    COMMENT_MISMATCH_AUTHOR_ERROR(409,"C002","댓글 글쓴이와 일치하지 않음"),
+
+    // image
+    INVALID_FILE_TYPE(400, "I001", "알맞지 않은 파일 확장자입니다.");
 
     private final int status;
     private final String code;
