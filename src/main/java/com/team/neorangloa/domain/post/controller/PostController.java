@@ -4,6 +4,7 @@ package com.team.neorangloa.domain.post.controller;
 //import io.swagger.annotations.ApiOperation;
 //import io.swagger.annotations.ApiResponse;
 //import io.swagger.annotations.ApiResponses;
+import com.team.neorangloa.domain.image.service.ImageFileUploadService;
 import com.team.neorangloa.domain.post.PostMapper;
 import com.team.neorangloa.domain.post.dto.PostListResponse;
 import com.team.neorangloa.domain.post.dto.PostRequest;
@@ -31,7 +32,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
-
+    private final ImageFileUploadService imageFileUploadService;
     private final PostMapper postMapper;
 
     @PostMapping
@@ -45,8 +46,9 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseEntity<ResultResponse> getPost(@PathVariable Long postId, HttpServletRequest request, HttpServletResponse response) {
         postService.updateViewCounts(postId, request, response);
+        List<String> imagesByPost = imageFileUploadService.getImagesByPost(postService.findPostById(postId));
         return ResponseEntity.ok(ResultResponse.of(ResultCode.POST_GET_SUCCESS
-                ,postMapper.of(postService.findPostById(postId))));
+                ,postMapper.of(postService.findPostById(postId) , imagesByPost)));
     }
 
     @GetMapping("/all/{page}")

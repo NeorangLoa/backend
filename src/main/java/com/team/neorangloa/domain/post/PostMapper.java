@@ -18,20 +18,19 @@ public class PostMapper {
         return Post.builder()
                 .title(postRequest.getTitle())
                 .content(postRequest.getContent())
-                .post_image(postRequest.getImage())
                 .removed(false)
                 .author(loginUser)
                 .build();
     }
 
     @Builder
-    public static PostResponse of(Post post) {
+    public static PostResponse of(Post post, List<String> imageUrls) {
         return PostResponse.builder()
                 .postId(post.getId())
                 .title(post.getTitle())
                 .nickname(post.getAuthor().getNickname())
+                .imageUrls(imageUrls)
                 .content(post.getContent())
-                .image(post.getPost_image())
                 .viewCounts(post.getViewCounts())
                 .recommendationCount(post.getRecommendationCount())
                 .createdAt(post.getCreatedTime())
