@@ -65,8 +65,9 @@ public class UserController {
 
     @GetMapping("/charactersInfo/{characterName}")
     public ResponseEntity<String> getCharactersInfo(@RequestHeader("API-Key") String apiKey,
-                                                    @PathVariable String characterName) {
-        String apiUrl = "https://developer-lostark.game.onstove.com/characters/" + characterName + "/siblings";
+                                                    @PathVariable String characterName,
+                                                    @RequestParam(required = false, defaultValue = "") String filter) {
+        String apiUrl = "https://developer-lostark.game.onstove.com/armories/characters/" + characterName +"/"+ filter;
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
