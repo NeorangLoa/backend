@@ -1,6 +1,8 @@
 package com.team.neorangloa.domain.post.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
@@ -10,30 +12,31 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostRaidRequest {
     @NotEmpty
     @Length(max = 100, message = "제목은 최대 100글자를 넘을 수 없습니다.")
-    private final String title;
+    private String title;
 
     @NotEmpty
-    private final String content;
+    private String content;
 
     @NotNull
     @Max(8)
-    private final int maxAttacker;
+    private int maxAttacker;
 
     @NotNull
     @Max(8)
-    private final int maxSupporter;
+    private int maxSupporter;
 
     @NotNull
-    private final LocalDateTime finishedAt;
+    private LocalDateTime finishedAt;
 
     // 레이드 정보
     @NotEmpty
-    private final String raidName;
+    private String raidName;
     @NotEmpty
-    private final String raidItemLevel;
+    private String raidItemLevel;
 
 }
