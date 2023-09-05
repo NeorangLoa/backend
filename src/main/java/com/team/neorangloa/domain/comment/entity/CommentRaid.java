@@ -36,6 +36,9 @@ public class CommentRaid extends BaseTimeEntity {
     @JoinColumn(name = "POST_RAID_ID", nullable = false)
     private PostRaid postRaid;
 
+    @Column(name = "RECOMMENDATION_COUNT", nullable = false)
+    private int recommendationCount;
+
     @Builder
     public CommentRaid(String content, boolean removed, User author, PostRaid postRaid) {
         this.content = content;

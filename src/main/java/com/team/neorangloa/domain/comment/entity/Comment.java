@@ -31,6 +31,9 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "USER_ID")
     private User author;
 
+    @Column(name = "RECOMMENDATION_COUNT", nullable = false)
+    private int recommendationCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_ID", nullable = false)
     private Post post;
