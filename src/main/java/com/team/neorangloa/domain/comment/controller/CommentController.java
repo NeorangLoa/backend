@@ -60,4 +60,14 @@ public class CommentController {
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_DELETE_SUCCESS));
     }
+
+    @GetMapping("/recommend/{commentId}")
+    @LoginRequired
+    public ResponseEntity<ResultResponse> recommendPost(@PathVariable Long commentId,
+                                                        @LoginUser User loginUser){
+        Comment comment = commentService.findCommentById(commentId);
+        int commentLike = commentService.updateCommentRecommendation(loginUser, comment);
+
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_RECOMMENDATION_UPDATE_SUCCESS, commentLike));
+    }
 }

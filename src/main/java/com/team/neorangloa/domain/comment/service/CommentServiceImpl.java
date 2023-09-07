@@ -5,7 +5,9 @@ import com.team.neorangloa.domain.comment.dto.CommentRequest;
 import com.team.neorangloa.domain.comment.dto.CommentResponse;
 import com.team.neorangloa.domain.comment.dto.CommentUpdateRequest;
 import com.team.neorangloa.domain.comment.entity.Comment;
+import com.team.neorangloa.domain.comment.entity.CommentRecommendation;
 import com.team.neorangloa.domain.comment.exception.CommentAuthorMismatchException;
+import com.team.neorangloa.domain.comment.repository.CommentRecommendationRepository;
 import com.team.neorangloa.domain.comment.repository.CommentRepository;
 import com.team.neorangloa.domain.post.entity.Post;
 import com.team.neorangloa.domain.post.service.PostService;
@@ -18,11 +20,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
     private final CommentRepository commentRepository;
+    private final CommentRecommendationRepository commentRecommendationRepository;
     private final CommentMapper commentMapper;
 
     private final PostService postService;
@@ -70,5 +74,26 @@ public class CommentServiceImpl implements CommentService{
         if (!loginUser.getId().equals(comment.getAuthor().getId())) {
             throw new CommentAuthorMismatchException();
         }
+    }
+
+    @Transactional
+    @Override
+    public int updateCommentRecommendation(User loginUser, Comment comment){
+        Optional<CommentRecommendation> commentRecommendation = commentRecommendationRepository.findByClientAndComment(loginUser, comment);
+
+        if (commentRecommendation.isEmpty()){
+            CommentRecommendation newCommentRecommendation = CommentRecommendation.builder()
+                    .comment(comment)
+                    .user(loginUser)
+                    .isRecommended(true)
+                    .build();
+            commentRecommendationRepository.save(newCommentRecommendation);
+            commentRepository.increaseRecommendationCount(comment.getId());
+        } else {
+            commentRecommendationRepository.deleteByUserAndComment(loginUser, comment);
+            commentRecommendation.get().setRecommended(false);
+            commentRepository.decreaseRecommendationCount(comment.getId());
+        }
+        return comment.getRecommendationCount();
     }
 }

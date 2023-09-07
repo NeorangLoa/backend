@@ -17,4 +17,5 @@ public interface CommentService {
     public void deleteComment(User user, Comment comment);
     public List<CommentResponse> findCommentByPostId(Integer page, Integer size, Long postId);
     public void checkIsAuthor(User user, Comment comment);
+    public int updateCommentRecommendation(User loginUser, Comment comment);
 }

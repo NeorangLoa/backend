@@ -2,11 +2,16 @@ package com.team.neorangloa.domain.comment.entity;
 
 import com.team.neorangloa.domain.user.entity.User;
 import com.team.neorangloa.global.entity.BaseTimeEntity;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @Table(name= "COMMENT_RECOMMENDATION")
+@NoArgsConstructor
 public class CommentRecommendation extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +30,13 @@ public class CommentRecommendation extends BaseTimeEntity {
 //    public void setRecommended(boolean recommended){
 //        this.isRecommended = recommended;
 //    }
-
+    public void setRecommended(boolean recommended){
+        this.isRecommended = recommended;
+    }
+    @Builder
+    public CommentRecommendation(User user, Comment comment, boolean isRecommended) {
+        this.user = user;
+        this.comment = comment;
+        this.isRecommended = isRecommended;
+    }
 }
