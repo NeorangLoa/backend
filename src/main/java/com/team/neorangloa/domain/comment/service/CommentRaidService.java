@@ -18,4 +18,5 @@ public interface CommentRaidService {
     public void deleteCommentRaid(User user, CommentRaid commentRaid);
     public List<CommentRaidResponse> findCommentRaidByPostRaidId(Integer page, Integer size, Long postRaidId);
     public void checkIsAuthor(User user, CommentRaid commentRaid);
+    public int updateCommentRaidRecommendation(User loginUser, CommentRaid commentRaid);
 }

@@ -1,5 +1,6 @@
 package com.team.neorangloa.domain.comment.controller;
 
+import com.team.neorangloa.domain.comment.CommentMapper;
 import com.team.neorangloa.domain.comment.dto.CommentRequest;
 import com.team.neorangloa.domain.comment.dto.CommentResponse;
 import com.team.neorangloa.domain.comment.dto.CommentUpdateRequest;
@@ -63,7 +64,7 @@ public class CommentController {
 
     @GetMapping("/recommend/{commentId}")
     @LoginRequired
-    public ResponseEntity<ResultResponse> recommendPost(@PathVariable Long commentId,
+    public ResponseEntity<ResultResponse> recommendComment(@PathVariable Long commentId,
                                                         @LoginUser User loginUser){
         Comment comment = commentService.findCommentById(commentId);
         int commentLike = commentService.updateCommentRecommendation(loginUser, comment);

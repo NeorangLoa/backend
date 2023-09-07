@@ -27,9 +27,6 @@ public class CommentRecommendation extends BaseTimeEntity {
 
     private boolean isRecommended;
 
-//    public void setRecommended(boolean recommended){
-//        this.isRecommended = recommended;
-//    }
     public void setRecommended(boolean recommended){
         this.isRecommended = recommended;
     }

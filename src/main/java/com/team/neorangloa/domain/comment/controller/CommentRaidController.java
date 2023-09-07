@@ -3,6 +3,7 @@ package com.team.neorangloa.domain.comment.controller;
 import com.team.neorangloa.domain.comment.dto.CommentRaidRequest;
 import com.team.neorangloa.domain.comment.dto.CommentRaidResponse;
 import com.team.neorangloa.domain.comment.dto.CommentRaidUpdateRequest;
+import com.team.neorangloa.domain.comment.entity.Comment;
 import com.team.neorangloa.domain.comment.entity.CommentRaid;
 import com.team.neorangloa.domain.comment.service.CommentRaidService;
 import com.team.neorangloa.domain.user.entity.User;
@@ -59,5 +60,14 @@ public class CommentRaidController {
         commentRaidService.deleteCommentRaid(loginUser, commentRaid);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_DELETE_SUCCESS));
+    }
+    @GetMapping("/recommend/{commentRaidId}")
+    @LoginRequired
+    public ResponseEntity<ResultResponse> recommendCommentRaid(@PathVariable Long commentRaidId,
+                                                        @LoginUser User loginUser){
+        CommentRaid commentRaid = commentRaidService.findCommentRaidById(commentRaidId);
+        int commentLike = commentRaidService.updateCommentRaidRecommendation(loginUser, commentRaid);
+
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_RECOMMENDATION_UPDATE_SUCCESS, commentLike));
     }
 }

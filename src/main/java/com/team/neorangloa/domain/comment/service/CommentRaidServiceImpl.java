@@ -4,9 +4,14 @@ import com.team.neorangloa.domain.comment.CommentRaidMapper;
 import com.team.neorangloa.domain.comment.dto.CommentRaidRequest;
 import com.team.neorangloa.domain.comment.dto.CommentRaidResponse;
 import com.team.neorangloa.domain.comment.dto.CommentRaidUpdateRequest;
+import com.team.neorangloa.domain.comment.entity.Comment;
 import com.team.neorangloa.domain.comment.entity.CommentRaid;
+import com.team.neorangloa.domain.comment.entity.CommentRaidRecommendation;
+import com.team.neorangloa.domain.comment.entity.CommentRecommendation;
 import com.team.neorangloa.domain.comment.exception.CommentAuthorMismatchException;
+import com.team.neorangloa.domain.comment.repository.CommentRaidRecommendationRepository;
 import com.team.neorangloa.domain.comment.repository.CommentRaidRepository;
+import com.team.neorangloa.domain.comment.repository.CommentRecommendationRepository;
 import com.team.neorangloa.domain.post.entity.PostRaid;
 import com.team.neorangloa.domain.post.exception.PostAuthorMismatchException;
 import com.team.neorangloa.domain.post.service.PostRaidService;
@@ -19,11 +24,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommentRaidServiceImpl implements CommentRaidService{
     private final CommentRaidRepository commentRaidRepository;
+    private final CommentRaidRecommendationRepository commentRaidRecommendationRepository;
     private final CommentRaidMapper commentRaidMapper;
     private final PostRaidService postRaidService;
 
@@ -70,5 +77,26 @@ public class CommentRaidServiceImpl implements CommentRaidService{
         if (!loginUser.getId().equals(commentRaid.getAuthor().getId())) {
             throw new CommentAuthorMismatchException();
         }
+    }
+
+    @Override
+    @Transactional
+    public int updateCommentRaidRecommendation(User loginUser, CommentRaid commentRaid){
+        Optional<CommentRaidRecommendation> commentRaidRecommendation = commentRaidRecommendationRepository.findByClientAndComment(loginUser, commentRaid);
+
+        if (commentRaidRecommendation.isEmpty()){
+            CommentRaidRecommendation newCommentRaidRecommendation = CommentRaidRecommendation.builder()
+                    .commentRaid(commentRaid)
+                    .user(loginUser)
+                    .isRecommended(true)
+                    .build();
+            commentRaidRecommendationRepository.save(newCommentRaidRecommendation);
+            commentRaidRepository.increaseRecommendationCount(commentRaid.getId());
+        } else {
+            commentRaidRecommendationRepository.deleteByUserAndCommentRaid(loginUser, commentRaid);
+            commentRaidRecommendation.get().setRecommended(false);
+            commentRaidRepository.decreaseRecommendationCount(commentRaid.getId());
+        }
+        return commentRaid.getRecommendationCount();
     }
 }
