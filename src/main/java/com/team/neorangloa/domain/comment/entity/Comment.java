@@ -7,11 +7,15 @@ import com.team.neorangloa.global.entity.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Getter
 @Table(name = "COMMENT")
+@DynamicInsert
+@DynamicUpdate
 @NoArgsConstructor
 @Entity
 public class Comment extends BaseTimeEntity {
@@ -30,6 +34,9 @@ public class Comment extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User author;
+
+    @Column(name = "RECOMMENDATION_COUNT", nullable = false)
+    private int recommendationCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_ID", nullable = false)

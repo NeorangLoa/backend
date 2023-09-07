@@ -1,5 +1,6 @@
 package com.team.neorangloa.domain.comment.controller;
 
+import com.team.neorangloa.domain.comment.CommentMapper;
 import com.team.neorangloa.domain.comment.dto.CommentRequest;
 import com.team.neorangloa.domain.comment.dto.CommentResponse;
 import com.team.neorangloa.domain.comment.dto.CommentUpdateRequest;
@@ -59,5 +60,15 @@ public class CommentController {
         commentService.deleteComment(loginUser, comment);
 
         return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_DELETE_SUCCESS));
+    }
+
+    @GetMapping("/recommend/{commentId}")
+    @LoginRequired
+    public ResponseEntity<ResultResponse> recommendComment(@PathVariable Long commentId,
+                                                        @LoginUser User loginUser){
+        Comment comment = commentService.findCommentById(commentId);
+        int commentLike = commentService.updateCommentRecommendation(loginUser, comment);
+
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.COMMENT_RECOMMENDATION_UPDATE_SUCCESS, commentLike));
     }
 }

@@ -26,6 +26,8 @@ public class CommentRaidMapper {
                 .commentRaidId(commentRaid.getId())
                 .nickname(commentRaid.getAuthor().getNickname())
                 .content(commentRaid.getContent())
+                .recommendationCount(commentRaid.getRecommendationCount())
+                .createdAt(commentRaid.getCreatedTime())
                 .build();
     }
 
