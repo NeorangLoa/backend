@@ -32,6 +32,7 @@ public class LoginController {
     private final UserService userService;
     private final LoginService loginService;
 
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @PostMapping(LOGIN_PATH)
     public ResponseEntity<ResultResponse> login(HttpServletRequest request,
                                                 @RequestBody @Valid LoginRequest loginRequest,
