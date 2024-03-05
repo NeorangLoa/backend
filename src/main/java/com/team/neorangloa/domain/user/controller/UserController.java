@@ -13,16 +13,20 @@ import com.team.neorangloa.global.annotation.LoginUser;
 import com.team.neorangloa.global.result.ResultCode;
 import com.team.neorangloa.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserService userService;
+    private final RestTemplate restTemplate;
 
     @PostMapping
     public ResponseEntity<ResultResponse> signup(
@@ -56,5 +60,22 @@ public class UserController {
         }
         userService.updatePassword(logInUserId, updatePasswordRequest);
         return ResponseEntity.ok(ResultResponse.of(ResultCode.UPDATE_USER_PASSWORD_SUCCESS));
+    }
+
+
+    @GetMapping("/charactersInfo/{characterName}")
+    public ResponseEntity<String> getCharactersInfo(@RequestHeader("API-Key") String apiKey,
+                                                    @PathVariable String characterName,
+                                                    @RequestParam(required = false, defaultValue = "") String filter) {
+        String apiUrl = "https://developer-lostark.game.onstove.com/armories/characters/" + characterName +"/"+ filter;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+        headers.set(HttpHeaders.AUTHORIZATION, apiKey);
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+        ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.GET, httpEntity, String.class);
+
+        return ResponseEntity.ok(response.getBody());
     }
 }
